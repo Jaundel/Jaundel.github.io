@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Neural Biome studies whether one scalar coordinate can organize six regimes in an adaptive multi-agent neural cellular automaton." />
+  <title>Neural Biome: A Phase Coordinate for Learned Ecosystems</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="site-nav">
+      <a href="../projects.html">portfolio</a>
+      <a href="#abstract">abstract</a>
+      <a href="#system">system</a>
+      <a href="#phi-path">&phi; path</a>
+      <a href="#regimes">regimes</a>
+      <a href="#findings">findings</a>
+      <a href="#calibration">calibration</a>
+      <a href="#interpretation">discussion</a>
+      <a href="#references">references</a>
+      <a href="https://pub.sakana.ai/digital-ecosystem/">sakana</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">neural biome</p>
+      <h1>a phase coordinate for learned ecosystems</h1>
+      <p class="subtitle">
+        An interactive research article investigating whether a single scalar coordinate &phi;
+        can parameterize the full behavioral spectrum of a learned multi-agent neural cellular
+        automaton&mdash;from frozen and territorial through critical, flickering, chaotic,
+        and cooperative dynamics.
+      </p>
+
+      <canvas id="nca-canvas" width="64" height="64"></canvas>
+
+      <div class="phi-control">
+        <div class="phi-track-labels"></div>
+        <input type="range" id="phi-slider" min="0" max="1" step="0.001" value="0.43" />
+        <div class="phi-readout">
+          &phi; = <span id="phi-value">0.43</span>
+          <span id="regime-label" class="regime-badge">Edge of Chaos</span>
+          <button type="button" id="reset-button">reset</button>
+        </div>
+      </div>
+
+      <p id="learning-status" class="learning-status">loading adaptive field</p>
+      <p id="regime-description" class="regime-desc"></p>
+    </header>
+
+    <section class="chart-section" aria-label="population timeline">
+      <canvas id="chart-canvas" width="800" height="140"></canvas>
+    </section>
+
+    <section id="waypoints" class="regime-panel">
+      <div class="regime-panel-header">
+        <span class="regime-panel-title">calibrated waypoints</span>
+        <button type="button" id="researcher-toggle" class="researcher-toggle">show lab notes</button>
+      </div>
+      <div class="regime-cards"></div>
+    </section>
+
+    <article>
+      <section id="abstract">
+        <h2>abstract</h2>
+        <p>
+          Neural Biome is an interactive experiment extending Sakana AI's
+          <em>Digital Ecosystems</em>: a population of learned neural cellular species compete, adapt,
+          and reorganize on a shared grid. The central question is whether six visually and
+          dynamically distinct regimes can be arranged along a single scalar coordinate
+          &phi; &isin; [0, 1], analogous in spirit to Langton's &lambda; for classical cellular
+          automata.
+        </p>
+        <p>
+          &phi; is not an arbitrary reparameterization; it is a smooth, calibrated path through three
+          interpretable controls&mdash;growth-gate steepness, competition temperature, and survival
+          threshold&mdash;chosen such that each waypoint corresponds to a mechanistically distinct
+          dynamical regime. The central contribution is a reduction: a learned ecosystem that appears
+          high-dimensional can be rendered legible through one carefully designed experimental
+          trajectory.
+        </p>
+        <p>
+          This article presents the update rule, the learned attack-defense fields, the calibrated
+          &phi; path, the six regime definitions, and the iterative protocol used to discover the
+          final parameter ordering. The hypothesis is intentionally falsifiable: if any two regimes
+          collapse into a single dynamical class under independent measurement, the one-dimensional
+          claim is weakened.
+        </p>
+      </section>
+
+      <section id="motivation">
+        <h2>background and motivation</h2>
+        <p>
+          Multi-agent artificial life systems are easy to observe and difficult to explain. A viewer
+          can recognize territorial expansion, invasion fronts, population collapse, rapid flickering,
+          or sustained coexistence, yet these observations remain anecdotal without a controlled
+          experimental frame. Sakana AI's <em>Digital Ecosystems</em> demonstrates that learned
+          neural species can generate rich competitive dynamics; Neural Biome asks whether part of
+          that richness can be compressed into a single interpretable coordinate, and what the
+          structure of such a compression reveals about the mechanisms of the underlying system.
+        </p>
+        <p>
+          The precedent is Langton's &lambda; parameter for classical cellular automata, which
+          organized a spectrum from frozen to chaotic computation along a single scalar. &lambda;
+          succeeded not because it captured every detail of rule space, but because it identified
+          a regime boundary&mdash;the edge of chaos&mdash;where computationally interesting behavior
+          concentrated. Neural Biome applies a cognate strategy to a learned, adaptive setting:
+          rather than rule tables, the control surface is defined by three continuous parameters of a
+          differentiable update rule, and the question is whether a designed path through that surface
+          can recover similarly structured regime transitions.
+        </p>
+      </section>
+
+      <section id="system">
+        <h2>system</h2>
+        <p>
+          The environment is a two-dimensional toroidal grid supporting five species. Each cell
+          stores a scalar aliveness value per species. At each timestep, a cell reads its
+          3&times;3 neighborhood, aggregates local species concentrations into a pooled signal,
+          constructs a defense environment vector from those concentrations, scores each candidate
+          species by its attack-defense affinity against that environment, and updates aliveness
+          through a growth gate applied to the resulting competition weights.
+        </p>
+        <p>
+          Every species at every cell carries two learned vectors: an attack vector and a defense
+          vector. Both are initialized near fixed species identities and are updated online via
+          TensorFlow.js gradient steps during the simulation. The ecosystem is therefore adaptive
+          in two coupled senses: aliveness distributions change as competition proceeds, and the
+          local competitive representations co-evolve with those distributions.
+        </p>
+
+        <figure class="paper-figure">
+          <figcaption>Figure 1. One update of the learned ecosystem.</figcaption>
+          <div class="flow-diagram" aria-label="System update diagram">
+            <div class="flow-node">
+              <span class="flow-label">neighborhood</span>
+              <span class="flow-detail">3x3 pooled aliveness</span>
+            </div>
+            <span class="flow-arrow">-></span>
+            <div class="flow-node">
+              <span class="flow-label">defense field</span>
+              <span class="flow-detail">local vector environment</span>
+            </div>
+            <span class="flow-arrow">-></span>
+            <div class="flow-node">
+              <span class="flow-label">species scores</span>
+              <span class="flow-detail">attack-defense affinity</span>
+            </div>
+            <span class="flow-arrow">-></span>
+            <div class="flow-node">
+              <span class="flow-label">softmax</span>
+              <span class="flow-detail">temperature tau</span>
+            </div>
+            <span class="flow-arrow">-></span>
+            <div class="flow-node">
+              <span class="flow-label">growth gate</span>
+              <span class="flow-detail">kGate and threshold</span>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          The competition step assigns normalized species weights via temperature-scaled softmax:
+        </p>
+        <div class="equation-block">
+          <span class="eq-number">(1)</span>
+          <span class="eq-main">
+            w<sub>i</sub>(x,y) =
+            <span class="frac">
+              <span>exp(score<sub>i</sub>(x,y) / &tau;)</span>
+              <span>&sum;<sub>j</sub> exp(score<sub>j</sub>(x,y) / &tau;)</span>
+            </span>
+          </span>
+        </div>
+        <p>
+          The growth gate applies a sigmoidal participation filter to the pooled neighborhood signal:
+        </p>
+        <div class="equation-block">
+          <span class="eq-number">(2)</span>
+          <span class="eq-main">
+            g<sub>i</sub>(x,y) =
+            &sigma;(k<sub>gate</sub> &middot; (pooled<sub>i</sub>(x,y) &minus; &theta;))
+          </span>
+        </div>
+        <p>
+          The temperature &tau; governs the sharpness of competitive exclusion: as &tau; &rarr; 0
+          the softmax collapses to a winner-take-all argmax; as &tau; increases, weight is
+          distributed more uniformly across species. k<sub>gate</sub> controls the steepness of
+          the alive/dead boundary, and &theta; is the minimum pooled concentration required for a
+          species to hold positive participation weight. These three quantities constitute the
+          coordinate system through which &phi; traces its path.
+        </p>
+      </section>
+
+      <section id="learning">
+        <h2>adaptive dynamics</h2>
+        <p>
+          The learned engine is deliberately decoupled from any hard-coded regime classifier. The
+          same update rule governs all six regimes; distinct behavior emerges solely because the
+          parameters place the ecosystem under structurally different competitive pressures.
+          No conditional branching injects regime-specific dynamics.
+        </p>
+        <p>
+          The learning objective rewards attack vectors that align with the local defense environment,
+          penalizes vector-norm collapse, and applies a weak diversity pressure to prevent the
+          ecosystem from degenerating trivially into a monoculture. A critical calibration decision
+          concerned the strength of that diversity term: an aggressive fairness correction prevented
+          extinction but simultaneously erased competitive asymmetries, depriving the system of
+          genuine winners and losers. The final formulation applies ecological rescue&mdash;a
+          survival floor below which a species receives marginal support&mdash;rather than equality
+          enforcement. Under this regime, species can lose locally, recover globally, or be
+          competitively eliminated, depending on the interaction dynamics at each waypoint.
+        </p>
+      </section>
+
+      <section id="phi-path">
+        <h2>the &phi; path</h2>
+        <p>
+          Neural Biome operationalizes &phi; by six calibrated waypoints in
+          (k<sub>gate</sub>, &tau;, &theta;) space, connected by monotone cubic Hermite interpolation.
+          The interpolant is smooth, overshoot-free, and ensures that the slider traverses a
+          continuous experimental trajectory rather than toggling between disconnected presets.
+        </p>
+        <p>
+          The path is non-monotonic in each individual parameter, and that non-monotonicity is
+          itself a finding. k<sub>gate</sub> decreases from Frozen toward Chaotic, then rises for
+          Cooperative. &tau; follows a pronounced U-shaped curve: low competition temperature
+          produces hard local winners and the temporal flickering associated with rapid rank reversal,
+          while elevated temperature softens selection pressure sufficiently to permit stable
+          coexistence. &theta; modulates whether weakly concentrated species retain participation
+          rights in local competition. Taken together, the curve's shape encodes a structural
+          claim: stable cooperation is not the natural continuation of chaos at higher &phi;;
+          it occupies a geometrically distinct region of the control surface and requires an explicit
+          turn in parameter space.
+        </p>
+
+        <figure class="paper-figure">
+          <figcaption>Figure 2. The calibrated path through parameter space.</figcaption>
+          <svg class="parameter-chart" viewBox="0 0 760 280" role="img" aria-label="Line chart of kGate, tau, and threshold against phi">
+            <line x1="58" y1="226" x2="724" y2="226" class="axis" />
+            <line x1="58" y1="28" x2="58" y2="226" class="axis" />
+            <text x="58" y="250" class="chart-tick">0.00</text>
+            <text x="238" y="250" class="chart-tick">0.27</text>
+            <text x="344" y="250" class="chart-tick">0.43</text>
+            <text x="491" y="250" class="chart-tick">0.65</text>
+            <text x="624" y="250" class="chart-tick">0.85</text>
+            <text x="724" y="250" class="chart-tick">1.00</text>
+            <text x="362" y="272" class="chart-axis-label">phi</text>
+
+            <polyline points="58,34 238,192 344,200 491,211 624,217 724,205" class="line-k" />
+            <polyline points="58,113 238,188 344,176 491,222 624,34 724,86" class="line-tau" />
+            <polyline points="58,94 238,101 344,108 491,152 624,132 724,171" class="line-threshold" />
+
+            <g class="chart-markers">
+              <circle cx="58" cy="34" r="4" />
+              <circle cx="238" cy="192" r="4" />
+              <circle cx="344" cy="200" r="4" />
+              <circle cx="491" cy="211" r="4" />
+              <circle cx="624" cy="217" r="4" />
+              <circle cx="724" cy="205" r="4" />
+            </g>
+
+            <g class="chart-legend">
+              <line x1="92" y1="36" x2="124" y2="36" class="line-k" />
+              <text x="132" y="40">kGate / 20</text>
+              <line x1="92" y1="58" x2="124" y2="58" class="line-tau" />
+              <text x="132" y="62">tau / 1.75</text>
+              <line x1="92" y1="80" x2="124" y2="80" class="line-threshold" />
+              <text x="132" y="84">threshold / 0.60</text>
+            </g>
+          </svg>
+        </figure>
+      </section>
+
+      <section id="regimes">
+        <h2>six regimes</h2>
+        <p>
+          Each regime is defined operationally by its dynamical signature, not by its visual
+          appearance alone. A regime is accepted only when its failure mode is distinguishable from
+          its neighbors under the same update rule. The explore buttons reset the simulation at the
+          corresponding &phi; waypoint.
+        </p>
+
+        <div class="regime-item" style="border-left-color: #7a8794;">
+          <div class="regime-item-head">
+            <span class="regime-item-name">Frozen</span>
+            <span class="regime-item-phi">&phi; = 0.00</span>
+            <button type="button" class="article-jump" data-phi="0.00">explore</button>
+          </div>
+          <p class="param-tuple">kGate = 20.00 &middot; &tau; = 1.00 &middot; threshold = 0.55</p>
+          <p>
+            High gate sharpness and a strict participation threshold suppress meaningful frontier
+            contact. Seeded islands persist indefinitely, but diversity is conserved by initialization
+            rather than by ongoing competitive interaction&mdash;the system is not yet an ecology.
+          </p>
+        </div>
+
+        <div class="regime-item" style="border-left-color: #d86c4a;">
+          <div class="regime-item-head">
+            <span class="regime-item-name">Territorial</span>
+            <span class="regime-item-phi">&phi; = 0.27</span>
+            <button type="button" class="article-jump" data-phi="0.27">explore</button>
+          </div>
+          <p class="param-tuple">kGate = 3.45 &middot; &tau; = 0.32 &middot; threshold = 0.53</p>
+          <p>
+            Species expand until fronts meet, then settle into coherent, durable domains. Borders
+            may be soft, but region interiors remain spatially legible; early movement relaxes into
+            stable structure rather than continuing to evolve.
+          </p>
+        </div>
+
+        <div class="regime-item" style="border-left-color: #d5a21f;">
+          <div class="regime-item-head">
+            <span class="regime-item-name">Edge of Chaos</span>
+            <span class="regime-item-phi">&phi; = 0.43</span>
+            <button type="button" class="article-jump" data-phi="0.43">explore</button>
+          </div>
+          <p class="param-tuple">kGate = 2.65 &middot; &tau; = 0.44 &middot; threshold = 0.49</p>
+          <p>
+            Stable cores persist under continued competitive pressure from active, moving fronts.
+            The regime is distinguished from Territorial by sustained frontier motion and from
+            Chaotic by the preservation of spatially coherent interiors.
+          </p>
+        </div>
+
+        <div class="regime-item" style="border-left-color: #5586d9;">
+          <div class="regime-item-head">
+            <span class="regime-item-name">Flicker-Mixing</span>
+            <span class="regime-item-phi">&phi; = 0.65</span>
+            <button type="button" class="article-jump" data-phi="0.65">explore</button>
+          </div>
+          <p class="param-tuple">kGate = 1.55 &middot; &tau; = 0.09 &middot; threshold = 0.38</p>
+          <p>
+            Near-zero temperature drives the softmax toward winner-take-all selection. The visually
+            mixed field is not cooperative coexistence; it is rapid temporal switching as cells
+            commit to successive local winners and reverse as the competitive field shifts.
+          </p>
+        </div>
+
+        <div class="regime-item" style="border-left-color: #8d5bd1;">
+          <div class="regime-item-head">
+            <span class="regime-item-name">Chaotic</span>
+            <span class="regime-item-phi">&phi; = 0.85</span>
+            <button type="button" class="article-jump" data-phi="0.85">explore</button>
+          </div>
+          <p class="param-tuple">kGate = 0.95 &middot; &tau; = 1.75 &middot; threshold = 0.43</p>
+          <p>
+            Transient cooperative-looking structures emerge but fail to persist. The defining
+            signature is the continual loss of long-lived spatial organization: borders dissolve,
+            partially reform, and dissolve again under sustained competitive instability.
+          </p>
+        </div>
+
+        <div class="regime-item" style="border-left-color: #1f9d70;">
+          <div class="regime-item-head">
+            <span class="regime-item-name">Cooperative</span>
+            <span class="regime-item-phi">&phi; = 1.00</span>
+            <button type="button" class="article-jump" data-phi="1.00">explore</button>
+          </div>
+          <p class="param-tuple">kGate = 2.10 &middot; &tau; = 1.35 &middot; threshold = 0.31</p>
+          <p>
+            Multiple species maintain stable activity in spatially interleaved regions. Coexistence
+            is sustained because competition is softened by elevated temperature and the lower
+            participation threshold permits weakly concentrated species to remain locally viable.
+          </p>
+        </div>
+      </section>
+
+      <section id="findings">
+        <h2>findings</h2>
+        <p>
+          Three findings emerge from the calibration process with sufficient generality to warrant
+          independent statement.
+        </p>
+
+        <div class="finding-grid">
+          <div class="finding-card">
+            <span class="finding-kicker">finding 1</span>
+            <h3>visual similarity masks mechanistic difference.</h3>
+            <p>
+              Territorial and Edge of Chaos both exhibit spatial borders; Cooperative and
+              Flicker-Mixing both appear spatially mixed. In each pair, the visual resemblance
+              is superficial. Territorial borders settle; Edge borders are subject to ongoing
+              competitive pressure. Cooperative mixture is spatially stable; Flicker mixture is
+              a temporal artifact of rapid rank reversal.
+            </p>
+          </div>
+          <div class="finding-card">
+            <span class="finding-kicker">finding 2</span>
+            <h3>diversity preservation must be bounded below, not targeted above.</h3>
+            <p>
+              An aggressive fairness term that targeted equal species shares suppressed competitive
+              asymmetries and produced a uniform, ecologically inert mixed field. Replacing it with
+              a survival floor&mdash;marginal support below an extinction threshold only&mdash;
+              restored competitive dynamics while preventing trivial monoculture collapse.
+            </p>
+          </div>
+          <div class="finding-card">
+            <span class="finding-kicker">finding 3</span>
+            <h3>&phi; is a designed trajectory, not a universal order parameter.</h3>
+            <p>
+              Frozen, Territorial, Edge, Flicker, and Chaotic regimes can be arranged by
+              monotonically varying instability and selection sharpness. Cooperative behavior
+              requires a non-monotone excursion: elevated temperature combined with a reduced
+              participation threshold. The shape of the &phi; path encodes this structural
+              asymmetry.
+            </p>
+          </div>
+        </div>
+
+        <figure class="paper-figure">
+          <figcaption>Table 1. Qualitative signatures used during calibration.</figcaption>
+          <div class="signature-table" role="table" aria-label="Regime signatures">
+            <div class="sig-row sig-head" role="row">
+              <span>regime</span>
+              <span>spatial structure</span>
+              <span>temporal behavior</span>
+              <span>failure mode observed</span>
+            </div>
+            <div class="sig-row" role="row">
+              <span>Frozen</span>
+              <span>seed islands</span>
+              <span>nearly static</span>
+              <span>too easy; not an ecology yet</span>
+            </div>
+            <div class="sig-row" role="row">
+              <span>Territorial</span>
+              <span>large regions, soft borders</span>
+              <span>early movement, then settling</span>
+              <span>blurred into cooperation when threshold was too low</span>
+            </div>
+            <div class="sig-row" role="row">
+              <span>Edge</span>
+              <span>visible cores and active fronts</span>
+              <span>sustained frontier motion</span>
+              <span>became Territorial when borders were too clean</span>
+            </div>
+            <div class="sig-row" role="row">
+              <span>Flicker</span>
+              <span>fine-grained mixed field</span>
+              <span>rapid local winner changes</span>
+              <span>stabilized when low-temperature winners locked in</span>
+            </div>
+            <div class="sig-row" role="row">
+              <span>Chaotic</span>
+              <span>short-lived structure</span>
+              <span>continual dissolution and reforming</span>
+              <span>looked like slow cooperation until instability increased</span>
+            </div>
+            <div class="sig-row" role="row">
+              <span>Cooperative</span>
+              <span>interleaved species</span>
+              <span>persistent coexistence</span>
+              <span>collapsed if fairness was too weak or selection too sharp</span>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="calibration">
+        <h2>calibration protocol</h2>
+        <p>
+          The final &phi; curve was obtained through an iterative model-identification protocol,
+          not aesthetic tuning: define a regime operationally, reset the ecosystem at the candidate
+          waypoint, observe the failure mode, adjust only interpretable parameters or universal engine
+          dynamics, and retest neighboring regimes to confirm the intervention did not transfer the
+          problem elsewhere.
+        </p>
+        <p>
+          An automatic regime judge was considered and rejected on grounds of circularity. If
+          "Edge of Chaos" is operationalized as a weighted combination of entropy, spatial
+          autocorrelation, and boundary length, and the system is then tuned to maximize that score,
+          the result validates the score function rather than the phenomenon. The adopted verification
+          criterion is stricter: a waypoint is accepted only when it is visually distinguishable from
+          its neighbors, dynamically interpretable, and traceable to specific values of
+          k<sub>gate</sub>, &tau;, and &theta; through an explicit causal account.
+        </p>
+
+        <figure class="paper-figure">
+          <figcaption>Table 2. Calibration interventions and the mechanism they exposed.</figcaption>
+          <div class="calibration-table" role="table" aria-label="Calibration interventions">
+            <div class="cal-row cal-head" role="row">
+              <span>observed failure</span>
+              <span>diagnosis</span>
+              <span>intervention</span>
+              <span>lesson</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>Learned mode stabilized into calm mixed fields.</span>
+              <span>Fairness pressure was acting like equality pressure.</span>
+              <span>Reduced diversity rescue from a 20% target share to a low survival floor.</span>
+              <span>Fairness should prevent trivial extinction, not erase winners and losers.</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>Territorial borders were too diffuse.</span>
+              <span>The alive/dead transition was too soft at the frontier.</span>
+              <span>Increased k<sub>gate</sub> and threshold at the Territorial waypoint.</span>
+              <span>Territory requires a sharper participation boundary than cooperation.</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>Territorial became too static after sharpening.</span>
+              <span>The same sharp gate that clarified borders also suppressed frontier motion.</span>
+              <span>Slightly lowered threshold and softened k<sub>gate</sub>, preserving a small movement band.</span>
+              <span>Territorial order is not zero motion; it is motion that relaxes into structure.</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>Edge of Chaos had diffuse borders and weak late-life motion.</span>
+              <span>The frontier was permissive enough to blur, but not sharp enough to produce decisive turnover.</span>
+              <span>Raised k<sub>gate</sub> and threshold for cleaner death/life boundaries, then lowered &tau; to restore active frontier negotiation.</span>
+              <span>Edge is a metastable relation between coherent cores and pressured fronts, not a simple midpoint between Territorial and Chaos.</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>Flicker-Mixing stabilized after a brief active transient.</span>
+              <span>Low &tau; made hard winners, but those winners locked in.</span>
+              <span>Added universal low-temperature winner fatigue and turnover jitter.</span>
+              <span>Flicker requires temporal instability after winner selection, not just hard selection.</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>Chaos looked like slow cooperation.</span>
+              <span>High temperature softened competition but preservation kept structures alive.</span>
+              <span>Introduced temperature-instability pressure: more jitter, less preservation, more frontier drive at extreme &tau;.</span>
+              <span>Chaos is not merely high diversity; it is high diversity with weak persistence.</span>
+            </div>
+            <div class="cal-row" role="row">
+              <span>More killing made small colors disappear mechanically.</span>
+              <span>Direct weak-tail deletion violated the ecological premise.</span>
+              <span>Removed targeted end-of-life deletion; kept movement and competition-driven loss.</span>
+              <span>Death should be an outcome of competition, not an explicit punishment for being small.</span>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          The decisive insight was that each visual failure corresponded to a specific mechanistic
+          ambiguity. Diffuse borders indicated that the growth gate was not creating a sufficiently
+          sharp participation boundary. Stabilized flicker indicated that hard selection existed
+          without the temporal turnover mechanism necessary to prevent winner lock-in. Chaotic states
+          that resembled slow cooperation indicated elevated entropy coupled with unexpectedly high
+          structural persistence. These are not cosmetic distinctions; each implicates a different
+          component of the update rule and constrains which interventions are permissible.
+        </p>
+
+        <div class="calibration-principles">
+          <div>
+            <span class="principle-label">principle i</span>
+            <p>
+              Parameters define the experimental path; universal dynamics define the substrate.
+              Regime-specific conditionals in the update rule are excluded by design.
+            </p>
+          </div>
+          <div>
+            <span class="principle-label">principle ii</span>
+            <p>
+              A regime is accepted only when its failure mode is mechanistically distinguishable from
+              those of its neighbors. Edge of Chaos must fail differently from Territorial;
+              Flicker-Mixing must fail differently from Cooperative.
+            </p>
+          </div>
+          <div>
+            <span class="principle-label">principle iii</span>
+            <p>
+              Visual evidence is treated as phenomenological data, then translated into mechanisms:
+              gate sharpness, competition temperature, participation threshold, structural persistence,
+              and frontier mobility.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="interpretation">
+        <h2>discussion</h2>
+        <p>
+          The current result supports a carefully scoped claim: a single scalar can organize a
+          coherent, mechanistically interpretable route through six dynamically distinct regimes of
+          a learned digital ecosystem. It does not establish that the ecosystem possesses a single
+          intrinsic order parameter in the sense of statistical mechanics. &phi; is a designed
+          experimental trajectory; its validity is empirical and local, not derived from any
+          theoretical reduction of the system's full state space.
+        </p>
+        <p>
+          The most informative structural feature of the &phi; path is the non-monotone excursion
+          required for Cooperative behavior. Frozen, Territorial, Edge of Chaos, Flicker-Mixing,
+          and Chaotic regimes can be approximately ordered by increasing competitive instability and
+          decreasing selection sharpness&mdash;a progression analogous to the frozen-to-chaotic
+          transition in Langton's framework. Cooperative coexistence, however, is not a continuation
+          of that progression; it requires a qualitatively different combination of high temperature
+          and low threshold. This bend in parameter space has a precise interpretation: stable
+          multi-species coexistence in this system depends on simultaneously softening competitive
+          exclusion and lowering the barrier to participation, rather than simply reducing the
+          strength of competition globally.
+        </p>
+        <p>
+          The primary open problem is quantitative validation. The six waypoints were defined and
+          accepted on the basis of visual and mechanistic criteria; whether they constitute
+          statistically separable dynamical classes under repeated seeding has not yet been
+          established. Candidate measurements include species diversity and its variance across
+          seeds, spatial autocorrelation length, frontier density, and population-share volatility.
+          Such measurements would not replace the mechanistic definitions, but would test whether
+          those definitions have quantitative content independent of the specific parameter values
+          at which they were calibrated.
+        </p>
+      </section>
+
+      <section id="references">
+        <h2>references</h2>
+        <ol class="references-list">
+          <li>
+            Luke Darlow. <a href="https://pub.sakana.ai/digital-ecosystem/"><em>Digital Ecosystems:
+            Interactive Multi-Agent Neural Cellular Automata</em></a>. Sakana AI, 2026.
+          </li>
+          <li>
+            Ivy Zhang, Sebastian Risi, and Luke Darlow.
+            <a href="https://pub.sakana.ai/pdnca/"><em>Petri Dish Neural Cellular Automata</em></a>.
+            Sakana AI, 2025.
+          </li>
+          <li>
+            Christopher G. Langton.
+            <a href="https://zenodo.org/records/1258375"><em>Computation at the Edge of Chaos</em></a>.
+            Physica D, 42, 12-37, 1990.
+          </li>
+          <li>
+            Alexander Mordvintsev, Ettore Randazzo, Eyvind Niklasson, and Michael Levin.
+            <a href="https://distill.pub/2020/growing-ca/"><em>Growing Neural Cellular Automata</em></a>.
+            Distill, 2020.
+          </li>
+        </ol>
+      </section>
+    </article>
+
+    <footer>
+      <p>
+        Neural Biome is an independent interpretive experiment inspired by
+        <a href="https://pub.sakana.ai/digital-ecosystem/">Digital Ecosystems</a>.
+        Sakana source:
+        <a href="https://github.com/SakanaAI/digital-ecosystem">github.com/SakanaAI/digital-ecosystem</a>.
+      </p>
+    </footer>
+  </div>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

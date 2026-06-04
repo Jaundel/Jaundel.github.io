@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" role="img" aria-labelledby="title desc">
+  <title id="title">SEVEN routing placeholder figure</title>
+  <desc id="desc">Energy-aware AI query router diagram.</desc>
+  <rect width="980" height="520" fill="#f5f8f7"/>
+  <g font-family="Poppins, Arial, sans-serif" fill="#2d3940">
+    <text x="64" y="80" font-size="28" font-weight="600">Sustainable Energy Via Efficient Neural-routing</text>
+    <text x="64" y="118" font-size="17" fill="#5d727a">Placeholder architecture for local, API, and cloud routing paths.</text>
+  </g>
+  <g transform="translate(86 184)" fill="#fff" stroke="#c9d5da" stroke-width="2">
+    <rect width="174" height="102" rx="14"/>
+    <rect x="334" width="174" height="102" rx="14"/>
+    <rect x="668" y="-56" width="174" height="88" rx="14"/>
+    <rect x="668" y="72" width="174" height="88" rx="14"/>
+  </g>
+  <g fill="none" stroke-linecap="round">
+    <path d="M260 235h160" stroke="#4d7c8a" stroke-width="8"/>
+    <path d="M594 235c66 0 90-62 160-62" stroke="#6f99a3" stroke-width="8"/>
+    <path d="M594 235c66 0 90 64 160 64" stroke="#c47a53" stroke-width="8"/>
+  </g>
+  <g font-family="Poppins, Arial, sans-serif" text-anchor="middle">
+    <text x="173" y="232" font-size="19" font-weight="600" fill="#2d3940">Query</text>
+    <text x="507" y="224" font-size="19" font-weight="600" fill="#2d3940">Router</text>
+    <text x="507" y="252" font-size="14" fill="#58717c">easy / hard / unsafe</text>
+    <text x="841" y="176" font-size="18" font-weight="600" fill="#2d3940">Local model</text>
+    <text x="841" y="305" font-size="18" font-weight="600" fill="#2d3940">Cloud model</text>
+  </g>
+  <g transform="translate(176 374)" font-family="Poppins, Arial, sans-serif">
+    <rect width="628" height="56" rx="28" fill="#fff" stroke="#c9d5da"/>
+    <rect x="16" y="14" width="206" height="28" rx="14" fill="#4d7c8a"/>
+    <rect x="232" y="14" width="128" height="28" rx="14" fill="#6f99a3"/>
+    <rect x="370" y="14" width="242" height="28" rx="14" fill="#c47a53"/>
+    <text x="316" y="83" text-anchor="middle" font-size="14" fill="#58717c">energy estimate per query</text>
+  </g>
+</svg>

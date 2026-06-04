@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516" role="img" aria-labelledby="title desc">
+  <title id="title">Profile placeholder</title>
+  <desc id="desc">A clean placeholder portrait block for Jaundel Simon.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#eff3f5"/>
+      <stop offset="1" stop-color="#d7e0e4"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0" stop-color="#4d7c8a"/>
+      <stop offset="1" stop-color="#c47a53"/>
+    </linearGradient>
+  </defs>
+  <rect width="576" height="516" fill="url(#bg)"/>
+  <rect x="62" y="58" width="452" height="400" rx="6" fill="#ffffff" opacity=".72"/>
+  <circle cx="288" cy="206" r="84" fill="#d4dee3"/>
+  <path d="M142 456c22-105 84-158 146-158s124 53 146 158" fill="#c5d1d7"/>
+  <path d="M110 86h356M110 430h356" stroke="#ffffff" stroke-width="10" opacity=".75"/>
+  <g font-family="Poppins, Arial, sans-serif" text-anchor="middle">
+    <text x="288" y="221" font-size="66" font-weight="500" fill="#2d3940">JS</text>
+    <text x="288" y="490" font-size="15" fill="#50636c">Replace with headshot</text>
+  </g>
+  <rect x="0" y="0" width="22" height="516" fill="url(#panel)" opacity=".7"/>
+</svg>

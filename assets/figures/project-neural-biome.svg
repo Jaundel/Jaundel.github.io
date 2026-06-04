@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" role="img" aria-labelledby="title desc">
+  <title id="title">Neural Biome placeholder figure</title>
+  <desc id="desc">A cellular automata grid with emergent colored regions and a scalar control curve.</desc>
+  <rect width="980" height="520" fill="#f3f7f8"/>
+  <g transform="translate(54 52)">
+    <rect width="416" height="416" rx="12" fill="#fff" stroke="#c9d5da"/>
+    <g opacity=".9">
+      <rect x="24" y="24" width="32" height="32" fill="#e7eef1"/>
+      <rect x="60" y="24" width="32" height="32" fill="#4d7c8a"/>
+      <rect x="96" y="24" width="32" height="32" fill="#e7eef1"/>
+      <rect x="132" y="24" width="32" height="32" fill="#c47a53"/>
+      <rect x="168" y="24" width="32" height="32" fill="#6f99a3"/>
+      <rect x="204" y="24" width="32" height="32" fill="#e7eef1"/>
+      <rect x="240" y="24" width="32" height="32" fill="#35505c"/>
+      <rect x="276" y="24" width="32" height="32" fill="#e7eef1"/>
+      <rect x="312" y="24" width="32" height="32" fill="#8aa7ad"/>
+      <rect x="348" y="24" width="32" height="32" fill="#e7eef1"/>
+      <g transform="translate(24 60)">
+        <rect width="32" height="32" fill="#6f99a3"/><rect x="36" width="32" height="32" fill="#e7eef1"/><rect x="72" width="32" height="32" fill="#c47a53"/><rect x="108" width="32" height="32" fill="#4d7c8a"/><rect x="144" width="32" height="32" fill="#e7eef1"/><rect x="180" width="32" height="32" fill="#35505c"/><rect x="216" width="32" height="32" fill="#8aa7ad"/><rect x="252" width="32" height="32" fill="#e7eef1"/><rect x="288" width="32" height="32" fill="#c47a53"/><rect x="324" width="32" height="32" fill="#e7eef1"/>
+      </g>
+      <g transform="translate(24 96)">
+        <rect width="32" height="32" fill="#e7eef1"/><rect x="36" width="32" height="32" fill="#4d7c8a"/><rect x="72" width="32" height="32" fill="#6f99a3"/><rect x="108" width="32" height="32" fill="#8aa7ad"/><rect x="144" width="32" height="32" fill="#c47a53"/><rect x="180" width="32" height="32" fill="#e7eef1"/><rect x="216" width="32" height="32" fill="#35505c"/><rect x="252" width="32" height="32" fill="#6f99a3"/><rect x="288" width="32" height="32" fill="#e7eef1"/><rect x="324" width="32" height="32" fill="#4d7c8a"/>
+      </g>
+      <g transform="translate(24 132)">
+        <rect width="32" height="32" fill="#35505c"/><rect x="36" width="32" height="32" fill="#e7eef1"/><rect x="72" width="32" height="32" fill="#4d7c8a"/><rect x="108" width="32" height="32" fill="#e7eef1"/><rect x="144" width="32" height="32" fill="#6f99a3"/><rect x="180" width="32" height="32" fill="#c47a53"/><rect x="216" width="32" height="32" fill="#e7eef1"/><rect x="252" width="32" height="32" fill="#8aa7ad"/><rect x="288" width="32" height="32" fill="#4d7c8a"/><rect x="324" width="32" height="32" fill="#e7eef1"/>
+      </g>
+      <g transform="translate(24 168)">
+        <rect width="32" height="32" fill="#e7eef1"/><rect x="36" width="32" height="32" fill="#c47a53"/><rect x="72" width="32" height="32" fill="#35505c"/><rect x="108" width="32" height="32" fill="#6f99a3"/><rect x="144" width="32" height="32" fill="#e7eef1"/><rect x="180" width="32" height="32" fill="#4d7c8a"/><rect x="216" width="32" height="32" fill="#8aa7ad"/><rect x="252" width="32" height="32" fill="#e7eef1"/><rect x="288" width="32" height="32" fill="#6f99a3"/><rect x="324" width="32" height="32" fill="#c47a53"/>
+      </g>
+    </g>
+    <path d="M24 312c58-106 136 58 202-40s102 42 166-82" fill="none" stroke="#c47a53" stroke-width="7"/>
+  </g>
+  <g transform="translate(548 82)" font-family="Poppins, Arial, sans-serif">
+    <text x="0" y="0" font-size="26" fill="#2d3940" font-weight="600">Emergence index, phi</text>
+    <text x="0" y="38" font-size="17" fill="#58717c">Placeholder figure for multi-agent NCA regimes.</text>
+    <path d="M0 196c74-118 144-142 232-78s124 24 156-70" fill="none" stroke="#4d7c8a" stroke-width="8"/>
+    <g fill="#2d3940" font-size="14">
+      <text x="0" y="286">ordered</text><text x="130" y="286">edge</text><text x="254" y="286">chaotic</text>
+    </g>
+  </g>
+</svg>

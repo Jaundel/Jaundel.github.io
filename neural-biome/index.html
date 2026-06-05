@@ -6,64 +6,39 @@
   <meta name="description" content="Neural Biome studies whether one scalar coordinate can organize six regimes in an adaptive multi-agent neural cellular automaton." />
   <title>Neural Biome: A Phase Coordinate for Learned Ecosystems</title>
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=nb-otoro-20260605" />
 </head>
 <body>
   <div class="page-shell">
-    <nav class="site-nav">
-      <a href="../projects.html">portfolio</a>
-      <a href="#abstract">abstract</a>
-      <a href="#system">system</a>
-      <a href="#phi-path">&phi; path</a>
-      <a href="#regimes">regimes</a>
-      <a href="#findings">findings</a>
-      <a href="#calibration">calibration</a>
-      <a href="#interpretation">discussion</a>
-      <a href="#references">references</a>
-      <a href="https://pub.sakana.ai/digital-ecosystem/">sakana</a>
-    </nav>
-
     <header class="hero">
-      <p class="eyebrow">neural biome</p>
-      <h1>a phase coordinate for learned ecosystems</h1>
-      <p class="subtitle">
-        An interactive research article investigating whether a single scalar coordinate &phi;
-        can parameterize the full behavioral spectrum of a learned multi-agent neural cellular
-        automaton&mdash;from frozen and territorial through critical, flickering, chaotic,
-        and cooperative dynamics.
-      </p>
-
-      <canvas id="nca-canvas" width="64" height="64"></canvas>
-
-      <div class="phi-control">
-        <div class="phi-track-labels"></div>
-        <input type="range" id="phi-slider" min="0" max="1" step="0.001" value="0.43" />
-        <div class="phi-readout">
-          &phi; = <span id="phi-value">0.43</span>
-          <span id="regime-label" class="regime-badge">Edge of Chaos</span>
-          <button type="button" id="reset-button">reset</button>
+      <h1>Neural Biome: A Phase Coordinate for Learned Ecosystems</h1>
+      <div class="paper-meta" aria-label="project metadata">
+        <div class="meta-item">
+          <span class="meta-label">Jaundel Simon</span>
+          <span class="meta-value">Portfolio</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Draft Article</span>
+          <span class="meta-value">2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">System:</span>
+          <span class="meta-value">interactive NCA</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Inspired by:</span>
+          <span class="meta-value"><a href="https://pub.sakana.ai/digital-ecosystem/">Sakana AI</a></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Code:</span>
+          <span class="meta-value"><a href="https://github.com/Jaundel/Neural-Biome">repo</a></span>
         </div>
       </div>
-
-      <p id="learning-status" class="learning-status">loading adaptive field</p>
-      <p id="regime-description" class="regime-desc"></p>
     </header>
-
-    <section class="chart-section" aria-label="population timeline">
-      <canvas id="chart-canvas" width="800" height="140"></canvas>
-    </section>
-
-    <section id="waypoints" class="regime-panel">
-      <div class="regime-panel-header">
-        <span class="regime-panel-title">calibrated waypoints</span>
-        <button type="button" id="researcher-toggle" class="researcher-toggle">show lab notes</button>
-      </div>
-      <div class="regime-cards"></div>
-    </section>
 
     <article>
       <section id="abstract">
-        <h2>abstract</h2>
+        <h2>Abstract</h2>
         <p>
           Neural Biome is an interactive experiment extending Sakana AI's
           <em>Digital Ecosystems</em>: a population of learned neural cellular species compete, adapt,
@@ -89,8 +64,37 @@
         </p>
       </section>
 
+      <section id="interactive" class="interactive-demo" aria-label="interactive neural biome simulation">
+        <canvas id="nca-canvas" width="64" height="64"></canvas>
+
+        <div class="phi-control">
+          <div class="phi-track-labels"></div>
+          <input type="range" id="phi-slider" min="0" max="1" step="0.001" value="0.43" />
+          <div class="phi-readout">
+            &phi; = <span id="phi-value">0.43</span>
+            <span id="regime-label" class="regime-badge">Edge of Chaos</span>
+            <button type="button" id="reset-button">reset</button>
+          </div>
+        </div>
+
+        <p id="learning-status" class="learning-status">loading adaptive field</p>
+        <p id="regime-description" class="regime-desc"></p>
+
+        <div class="chart-section" aria-label="population timeline">
+          <canvas id="chart-canvas" width="800" height="140"></canvas>
+        </div>
+
+        <div id="waypoints" class="regime-panel">
+          <div class="regime-panel-header">
+            <span class="regime-panel-title">calibrated waypoints</span>
+            <button type="button" id="researcher-toggle" class="researcher-toggle">show lab notes</button>
+          </div>
+          <div class="regime-cards"></div>
+        </div>
+      </section>
+
       <section id="motivation">
-        <h2>background and motivation</h2>
+        <h2>Background and Motivation</h2>
         <p>
           Multi-agent artificial life systems are easy to observe and difficult to explain. A viewer
           can recognize territorial expansion, invasion fronts, population collapse, rapid flickering,
@@ -113,7 +117,7 @@
       </section>
 
       <section id="system">
-        <h2>system</h2>
+        <h2>System</h2>
         <p>
           The environment is a two-dimensional toroidal grid supporting five species. Each cell
           stores a scalar aliveness value per species. At each timestep, a cell reads its
@@ -194,7 +198,7 @@
       </section>
 
       <section id="learning">
-        <h2>adaptive dynamics</h2>
+        <h2>Adaptive Dynamics</h2>
         <p>
           The learned engine is deliberately decoupled from any hard-coded regime classifier. The
           same update rule governs all six regimes; distinct behavior emerges solely because the
@@ -215,7 +219,7 @@
       </section>
 
       <section id="phi-path">
-        <h2>the &phi; path</h2>
+        <h2>The &phi; Path</h2>
         <p>
           Neural Biome operationalizes &phi; by six calibrated waypoints in
           (k<sub>gate</sub>, &tau;, &theta;) space, connected by monotone cubic Hermite interpolation.
@@ -274,7 +278,7 @@
       </section>
 
       <section id="regimes">
-        <h2>six regimes</h2>
+        <h2>Six Regimes</h2>
         <p>
           Each regime is defined operationally by its dynamical signature, not by its visual
           appearance alone. A regime is accepted only when its failure mode is distinguishable from
@@ -368,7 +372,7 @@
       </section>
 
       <section id="findings">
-        <h2>findings</h2>
+        <h2>Findings</h2>
         <p>
           Three findings emerge from the calibration process with sufficient generality to warrant
           independent statement.
@@ -459,7 +463,7 @@
       </section>
 
       <section id="calibration">
-        <h2>calibration protocol</h2>
+        <h2>Calibration Protocol</h2>
         <p>
           The final &phi; curve was obtained through an iterative model-identification protocol,
           not aesthetic tuning: define a regime operationally, reset the ecosystem at the candidate
@@ -569,7 +573,7 @@
       </section>
 
       <section id="interpretation">
-        <h2>discussion</h2>
+        <h2>Discussion</h2>
         <p>
           The current result supports a carefully scoped claim: a single scalar can organize a
           coherent, mechanistically interpretable route through six dynamically distinct regimes of
@@ -603,7 +607,7 @@
       </section>
 
       <section id="references">
-        <h2>references</h2>
+        <h2>References</h2>
         <ol class="references-list">
           <li>
             Luke Darlow. <a href="https://pub.sakana.ai/digital-ecosystem/"><em>Digital Ecosystems:
@@ -638,6 +642,6 @@
     </footer>
   </div>
 
-  <script type="module" src="src/app.js"></script>
+  <script type="module" src="src/app.js?v=nb-otoro-20260605"></script>
 </body>
 </html>

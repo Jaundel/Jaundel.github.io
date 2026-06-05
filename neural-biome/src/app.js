@@ -206,7 +206,7 @@ document.addEventListener('click', (event) => {
   if (!Number.isFinite(targetPhi)) return;
 
   setPhi(targetPhi, true);
-  document.querySelector('.hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('.interactive-demo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 loop();

@@ -9,6 +9,9 @@
   --link: #1d63b7;
   --accent: #1b9e77;
   --accent-soft: #e7f5ef;
+  --sans: "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
+  --mono: "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
 }
 
 * {
@@ -19,7 +22,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 15px;
   line-height: 1.55;
 }
@@ -34,30 +37,14 @@ a:hover {
 }
 
 .page-shell {
-  width: min(920px, calc(100% - 32px));
+  width: min(1198px, calc(100% - 88px));
   margin: 0 auto;
-  padding: 28px 0 48px;
-}
-
-.site-nav {
-  display: flex;
-  gap: 18px;
-  justify-content: flex-end;
-  margin-bottom: 38px;
-  font-size: 13px;
+  padding: 32px 0 72px;
 }
 
 .hero {
-  text-align: center;
-}
-
-.eyebrow {
-  margin: 0 0 2px;
-  color: var(--muted);
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: lowercase;
+  text-align: left;
+  margin-bottom: 34px;
 }
 
 h1,
@@ -67,20 +54,67 @@ p {
 }
 
 h1 {
-  margin: 0 0 12px;
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 1.18;
+  max-width: 1180px;
+  margin: 0 0 28px;
+  color: #333333;
+  font-family: var(--serif);
+  font-size: clamp(48px, 5.8vw, 76px);
+  font-weight: 400;
+  line-height: .96;
   letter-spacing: 0;
-  text-transform: lowercase;
 }
 
 .subtitle {
-  max-width: 620px;
-  margin: 0 auto 16px;
+  max-width: 920px;
+  margin: 0 0 20px;
   color: #333333;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 16px;
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.62;
+}
+
+.paper-meta {
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding-top: 16px;
+  color: #8a8a8a;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.meta-item {
+  min-height: 44px;
+  padding: 0 18px;
+  border-left: 1px solid #e5e5e5;
+}
+
+.meta-item:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.meta-label {
+  display: block;
+  color: #777777;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.meta-value {
+  display: block;
+  color: #9a9a9a;
+  font-size: 14px;
+}
+
+.paper-meta a {
+  color: #8a8a8a;
+}
+
+.paper-meta a:hover {
+  color: var(--ink);
 }
 
 .status-note {
@@ -229,6 +263,18 @@ h1 {
   font-size: 13px;
 }
 
+.interactive-demo {
+  width: min(960px, 100%);
+  margin: 24px 0 44px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.interactive-demo .chart-section {
+  margin-bottom: 18px;
+}
+
 .chart-section {
   max-width: 760px;
   margin: 18px auto 34px;
@@ -250,7 +296,7 @@ h1 {
 
 .regime-panel {
   max-width: 760px;
-  margin: 0 auto 34px;
+  margin: 0 auto;
 }
 
 .regime-panel-header {
@@ -424,15 +470,16 @@ h1 {
 }
 
 article {
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 960px;
+  margin: 0;
   padding-bottom: 28px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
 }
 
 article section {
-  padding: 24px 0 18px;
-  border-top: 1px solid var(--faint);
+  margin-bottom: 42px;
+  padding: 0;
+  border-top: 0;
 }
 
 .equation {
@@ -660,12 +707,21 @@ article section {
 }
 
 h2 {
-  margin-bottom: 8px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 21px;
-  font-weight: 500;
-  line-height: 1.25;
-  text-transform: lowercase;
+  margin: 0 0 18px;
+  color: #222222;
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.08;
+  text-transform: none;
+}
+
+article p {
+  color: #333333;
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.62;
+  margin-bottom: 18px;
 }
 
 
@@ -802,8 +858,8 @@ h2 {
 }
 
 footer {
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 960px;
+  margin: 0;
   padding-top: 22px;
   border-top: 1px solid var(--faint);
   color: var(--muted);
@@ -817,21 +873,41 @@ footer p {
 
 @media (max-width: 640px) {
   .page-shell {
-    width: min(100% - 24px, 920px);
-    padding-top: 18px;
-  }
-
-  .site-nav {
-    justify-content: center;
-    margin-bottom: 26px;
+    width: min(100% - 28px, 960px);
+    padding-top: 22px;
   }
 
   h1 {
-    font-size: 27px;
+    font-size: clamp(40px, 13vw, 58px);
+    line-height: 1;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  article p {
+    font-size: 17px;
+  }
+
+  .paper-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .meta-item {
+    min-height: 0;
+    padding: 0;
+    border-left: 0;
   }
 
   .subtitle br {
     display: none;
+  }
+
+  .interactive-demo {
+    padding: 12px;
   }
 
   #nca-canvas {

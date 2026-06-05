@@ -265,7 +265,7 @@ body.portfolio-site {
 }
 
 .about-section {
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
 
 .about-section h1,
@@ -310,12 +310,22 @@ body.portfolio-site {
   min-width: 0;
 }
 
+.about-portrait-frame {
+  width: 180px;
+  height: 220px;
+  display: block;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
 .about-portrait {
   width: 180px;
   height: 220px;
   object-fit: cover;
-  object-position: 50% 34%;
-  border-radius: 3px;
+  object-position: 44% 42%;
+  transform: scale(1.25);
+  transform-origin: 42% 45%;
+  display: block;
 }
 
 .experience-entry {
@@ -603,6 +613,11 @@ footer p {
     gap: 22px;
   }
 
+  .about-portrait-frame {
+    width: 160px;
+    height: 196px;
+  }
+
   .about-portrait {
     width: 160px;
     height: 196px;
@@ -634,6 +649,7 @@ footer p {
     gap: 14px;
   }
 
+  .about-portrait-frame,
   .about-portrait,
   .experience-photo {
     width: 100%;

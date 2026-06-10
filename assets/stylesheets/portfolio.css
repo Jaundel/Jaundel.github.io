@@ -525,6 +525,19 @@ footer p {
   display: block;
 }
 
+.work-media.npu-media {
+  width: 360px !important;
+  height: auto !important;
+  aspect-ratio: 1586 / 992 !important;
+}
+
+.work-media.npu-media img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
+}
+
 .work-media::after {
   content: "";
   position: absolute;
@@ -741,6 +754,12 @@ footer p {
     width: 100% !important;
     height: auto !important;
     aspect-ratio: 1100 / 606 !important;
+  }
+
+  .work-media.npu-media {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1586 / 992 !important;
   }
 }
 

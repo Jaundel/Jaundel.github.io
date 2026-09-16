@@ -1,2 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Preserve the recorded bytes used by Morphic example checksums.
+morphic/** -text whitespace=cr-at-eol
+
+# Bundled Three.js contains verbatim GLSL strings with intentional whitespace.
+morphic/assets/*.js -whitespace
+morphic/captures/glove/LICENSE.txt -whitespace

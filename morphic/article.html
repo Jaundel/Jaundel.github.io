@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="How Morphic represents captured objects, simulates their response, transports their appearance, and tests behavior against observations."
+    />
+    <link rel="icon" href="./favicon.svg" />
+    <title>Morphic — From observed motion to editable objects</title>
+    <script type="module" crossorigin src="./assets/article-D6jOhsNO.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="stylesheet" crossorigin href="./assets/research-article-DF_8F5Sq.css">
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="article-nav">
+        <a href="https://jaundel.github.io/projects.html">Jaundel / Projects</a
+        ><a href="./">Studio</a><a href="#experiments">Results</a
+        ><a href="./downloads/morphic-source.zip">Code</a>
+      </nav>
+      <header class="hero">
+        <p class="project-name">Morphic</p>
+        <h1>From observed motion<br />to editable objects</h1>
+        <p>How captured shape, observed motion and physical simulation come together in an object you can interact with.</p>
+        <div class="links"><a href="./">Open the studio</a><a href="#experiments">Explore the experiments</a><a href="#reproduce">Methods and reproduction</a></div>
+      </header>
+      <p class="prose" id="article-status" role="status"></p>
+        <figure
+          data-gif-comparison
+          data-gif-suffix=""
+          data-still-suffix=""
+          data-alt-tail="observed recording beside its fitted Morphic response"
+        >
+          <img
+            loading="lazy"
+            class="comparison-gif"
+            src="./media/measured/sloth-stretch-response.gif"
+            alt="Stretch / reserved test observed recording beside its fitted Morphic response"
+          />
+          <div class="figure-toolbar">
+            <label
+              >Interaction
+              <select id="hero-trial">
+                <option value="sloth-stretch-response">
+                  Stretch / reserved test
+                </option>
+                <option value="sloth-response">Lift / fitting recording</option>
+              </select></label
+            >
+          </div>
+          <figcaption>
+            <strong
+              >A fitted response, carrying the object’s appearance.</strong
+            >
+            The stretch response was excluded from fitting. PhysTwin supplies
+            the RGB-D observations and pretrained Gaussian appearance. Morphic
+            fits and runs the compact response model shown here. The animation
+            is a simulator rollout under recorded hand loading.
+          </figcaption>
+        </figure>
+        <div class="prose">
+          <p>
+            A captured shape tells us where an object’s surface is. It does not
+            tell us what happens when someone lifts an arm, pushes its head, or
+            changes its material. The original Morphic studio could deform
+            textured objects interactively. This project adds a harder
+            requirement: the response must explain something observed.
+          </p>
+          <p>
+            The resulting system fits effective response parameters, preserves
+            the loading and numerical settings, and exports an object that
+            remains interactive. Its experiments also expose a boundary:
+            <strong
+              >better fitting does not reliably produce better
+              prediction.</strong
+            >
+            The real-object fit improves the recordings used to estimate it; a
+            new stretch action is predicted about as well by the default
+            response. That distinction drives the design below.
+          </p>
+        </div>
+
+        <section id="experiments">
+          <div class="prose">
+            <h2>Start with an observation</h2>
+            <p>
+              I used a soft toy from the public
+              <a href="https://github.com/Jianghanxiao/PhysTwin">PhysTwin</a>
+              dataset. The input includes metric 3D point tracks, hand
+              trajectories, camera calibration, and an initial shape prior.
+              Morphic receives the first-frame shape and the hand motion, then
+              adjusts a few simulator parameters to reduce the error against
+              observed object motion.
+            </p>
+            <p>
+              A lift alone leaves important behavior unconstrained. Its fitted
+              response reduces the lift error from 39.46 to 24.45 mm, but makes
+              a separate push worse: 69.03 to 79.65 mm. Fitting lift and push
+              together produces a better compromise. The looping comparison
+              makes that compromise visible.
+            </p>
+          </div>
+          <figure data-gif-comparison>
+            <img
+              loading="lazy"
+              class="comparison-gif"
+              src="./media/measured/single_lift_sloth-landmarks.gif"
+              alt="Lift recording compared with the default and jointly fitted Morphic responses"
+            />
+            <div class="figure-toolbar fitting-recording-control">
+              <label
+                >Recording
+                <select aria-label="Fitting recording">
+                  <option value="single_lift_sloth">Lift</option>
+                  <option value="single_push_sloth">Push</option>
+                </select></label
+              >
+            </div>
+            <figcaption>
+              <strong
+                >Observed landmarks and simulated predictions in the same
+                camera.</strong
+              >
+              Green rings mark the publisher’s 3D landmarks projected into the
+              source footage. Blue crosses mark Morphic’s predictions; lines
+              show their disagreement. All three panels share one encoded clock.
+              The displayed landmark error uses points excluded from fitting,
+              but these two actions were used during development.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <div class="prose">
+            <h2>A new action is the test</h2>
+            <p>
+              After fitting lift and push, I used double lift for validation and
+              reserved the entire stretch recording for testing. The selected
+              model receives each trial’s initial geometry and hand loading. It
+              receives no later object positions during simulation.
+            </p>
+            <p>
+              The result is mixed. On double lift, the default response is
+              better. On the reserved stretch action, the fitted response
+              reaches 27.78 mm filtered-track RMSE against 28.19 mm for the
+              default. The independent landmark errors are effectively equal.
+              The present evidence supports a working capture-and-test pipeline,
+              not a claim of reliable improvement across interactions.
+            </p>
+          </div>
+          <figure data-gif-comparison>
+            <img
+              loading="lazy"
+              class="comparison-gif"
+              src="./media/measured/double_stretch_sloth-landmarks.gif"
+              alt="Stretch test recording compared with the default and jointly fitted Morphic responses"
+            />
+            <div class="figure-toolbar fitting-recording-control">
+              <label
+                >Recording
+                <select aria-label="Transfer recording">
+                  <option value="double_stretch_sloth">Stretch / test</option>
+                  <option value="double_lift_sloth">
+                    Double lift / validation
+                  </option>
+                </select></label
+              >
+            </div>
+            <figcaption>
+              <strong>Transfer, including the failure.</strong> The parameters
+              were frozen before scoring stretch. Each trial uses a graph
+              rebuilt from its first frame, so this tests parameter transfer
+              conditional on an observed initial shape. It does not establish
+              one unloaded material model that works in every pose.
+            </figcaption>
+          </figure>
+          <div class="result-table">
+            <table>
+              <caption>
+                Filtered 3D track RMSE, in millimetres. Lower is better.
+              </caption>
+              <thead>
+                <tr>
+                  <th>Recording</th>
+                  <th>Default</th>
+                  <th>Joint fit</th>
+                  <th>Two-region fit</th>
+                </tr>
+              </thead>
+              <tbody id="track-results"></tbody>
+            </table>
+            <p class="table-note">
+              The default is an unfitted reference for this graph model, not one
+              of the original studio’s artistic presets. These values are read
+              from the frozen experiment report.
+            </p>
+          </div>
+          <div class="prose">
+            <details>
+              <summary>
+                Independent landmarks, simple baselines, and the scope of the
+                result
+              </summary>
+              <div class="result-table">
+                <table>
+                  <caption>
+                    Mean 3D landmark distance, in millimetres.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th>Recording</th>
+                      <th>Default</th>
+                      <th>Joint fit</th>
+                      <th>Two-region fit</th>
+                    </tr>
+                  </thead>
+                  <tbody id="landmark-results"></tbody>
+                </table>
+              </div>
+              <p>
+                The publisher’s sparse landmarks were excluded from the fitting
+                objective. Missing landmarks are masked, and the initial frame
+                is excluded from scores. They remain processed RGB-D
+                observations rather than force or motion-capture ground truth.
+              </p>
+              <p>
+                On stretch, a static object scores 43.82 mm and a fitted
+                distance-weighted hand-motion warp scores 45.58 mm. The physical
+                graph predicts the motion better than these simple alternatives.
+                Fitting its parameters adds little over its default settings. A
+                separate zebra lift pilot also fails to improve double-lift
+                validation: 17.66 mm default versus 18.41 mm fitted. This is a
+                small study, with one main object, one reserved action, and no
+                population-level accuracy claim.
+              </p>
+              <p>
+                <a href="./measured/experiment.json"
+                  >Download every model score and frozen parameter vector</a
+                >.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <section>
+          <div class="prose">
+            <h2>Keep the model small enough to inspect</h2>
+            <p>
+              The appearance can contain hundreds of thousands of elements. The
+              simulator uses 320 nodes. Neighboring nodes are linked by
+              compliant distance constraints; a second set of constraints
+              follows the observed hand points. Gravity and table contact
+              complete the loading model.
+            </p>
+          </div>
+          <div class="pipeline">
+            <div>
+              <h3>Prepare</h3>
+              <p>
+                Sample the initial geometry, construct local connections, and
+                bind appearance and observation points to nearby nodes. Preserve
+                metric scale.
+              </p>
+            </div>
+            <div>
+              <h3>Fit</h3>
+              <p>
+                Estimate object compliance, hand coupling, damping, and table
+                friction from lift and push. Keep later test motion outside the
+                optimizer.
+              </p>
+            </div>
+            <div>
+              <h3>Deploy</h3>
+              <p>
+                Serialize the geometry, response, hand loading, timestep, and
+                solver iterations. Run the same equations in the browser and
+                record interventions.
+              </p>
+            </div>
+          </div>
+          <div class="prose">
+            <p>
+              This is an independent XPBD implementation informed by PhysTwin’s
+              spring-based inverse problem. It preserves the original Morphic
+              studio’s interaction, appearance binding, export, and replay
+              workflow. Preparation runs in Python; the interactive solver runs
+              in JavaScript. All four frozen Python and JavaScript trajectories
+              agree with zero coordinate difference. The JavaScript solver takes
+              about 2.4–3.7 ms per recorded frame in a Node.js CPU check;
+              rendering and encoding are excluded. A more elaborate reduced
+              backend is not yet justified by the physics cost alone.
+            </p>
+            <details>
+              <summary>Equations and physical assumptions</summary>
+              <p>
+                Each edge uses a distance constraint
+                <code>C = ‖xᵢ − xⱼ‖ − ℓ₀</code>. XPBD updates its multiplier
+                with <code>Δλ = (−C − αλ/Δt²) / (wᵢ + wⱼ + α/Δt²)</code>. The
+                same compliance, ordering, eight substeps per 30 fps frame, and
+                five solver iterations are used during fitting and deployment.
+              </p>
+              <p>
+                Coordinates are metres; gravity is 9.81 m/s² toward the table.
+                Node masses are prescribed as one, the observed first frame is
+                treated as rest, and hand trajectories prescribe motion rather
+                than measured force. The fitted compliance is therefore an
+                effective discrete response. It is not Young’s modulus, a
+                measured density, or proof of internal composition.
+              </p>
+              <p>
+                There is no continuum-convergence claim, self-collision model,
+                or calibrated force prediction. First-frame shape error,
+                attachment error, and missing loading information can be
+                absorbed into fitted parameters. Changing scale, topology, mass,
+                timestep, or solver iterations invalidates the fit.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Why this combination, rather than a larger stack?
+              </summary>
+              <p>
+                <a href="https://arxiv.org/abs/2503.17973">PhysTwin</a> supplies
+                the most direct starting point: fit simulated behavior to
+                multi-view observations. I inspected its official implementation
+                and retained its distinction between object motion observations
+                and prescribed hand loading. Morphic uses a different integrator
+                and graph, so these results are not a reproduction of PhysTwin’s
+                reported accuracy.
+              </p>
+              <p>
+                <a href="https://arxiv.org/abs/2407.09497">Simplicits</a> and
+                <a
+                  href="https://research.nvidia.com/labs/sil/projects/freeform/"
+                  >FreeForm</a
+                >
+                provide stronger routes to representation-independent reduced
+                simulation. FreeForm’s material-aware particle skinning modes
+                are not interchangeable with a generic graph basis. Their
+                official sources were inspected, but neither backend was run
+                here. A replacement would need its own fit and a measured
+                fidelity/runtime comparison; there is no justified parameter
+                transfer between these models.
+              </p>
+              <p>
+                <a href="https://arxiv.org/abs/2609.07532">PhysReal</a>
+                motivates a staged increase in material complexity. Here that
+                becomes a bounded two-region ablation, not an implementation of
+                its hybrid constitutive model. No official implementation link
+                was found in the inspected project page.
+                <a href="https://xpandora.github.io/PhysGaussian/"
+                  >PhysGaussian</a
+                >
+                informs appearance transport only; Morphic does not import its
+                MPM simulator.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <section>
+          <div class="prose">
+            <h2>A material region has to earn its place</h2>
+            <p>
+              I first tested spatial fitting on a controlled block whose
+              geometry, loading, and hidden response were known. Across three
+              noise seeds, the heterogeneous fixture’s unseen-action error falls
+              from 5.50 mm with the preset to 3.96 mm with one fitted compliance
+              and 0.87 mm with two regions. The reference uses the same solver
+              family, so this verifies identification under controlled
+              conditions, not real material recovery.
+            </p>
+            <p>
+              The real toy does not offer the same evidence. Splitting its
+              initial world-X extent into two regions barely changes the fitting
+              residual and does not improve the stretch test. I kept the uniform
+              fit as the main model. The region boundary is a documented
+              modeling choice, not an inferred anatomical boundary.
+            </p>
+            <p>
+              <a href="./synthetic.html"
+                >Explore the synchronized synthetic experiment, noise tests, and
+                failure cases</a
+              >.
+            </p>
+            <h2>Editing is an intentional intervention</h2>
+            <p>
+              The studio can replay the same loading after a local compliance
+              change. It can also accept a new mouse interaction. These are
+              useful design experiments, but they are hypothetical edits: no
+              corresponding altered real toy was measured.
+            </p>
+          </div>
+          <figure>
+            <button id="load-studio">Load the interactive object</button>
+            <figcaption>
+              <strong>Try a response, then change it.</strong> Select a region
+              and adjust compliance; higher values make its springs easier to
+              deform. Compare the default and frozen fits under the same
+              loading. The full studio saves the appearance, response, loading,
+              and action log in one replayable session.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              loading="lazy"
+              class="comparison-gif"
+              data-static-gif
+              data-animated-src="./media/measured/sloth-material-edit.gif"
+              data-static-src="./media/measured/sloth-material-edit.jpg"
+              src="./media/measured/sloth-material-edit.gif"
+              alt="Fitted response beside a hypothetical lower-X compliance edit under the same loading"
+            />
+            <figcaption>
+              <strong>A hypothetical local edit.</strong> The right model
+              multiplies compliance in its lower-X half by 3.98. Geometry, hand
+              loading, contact, and timing remain identical. This edited toy was
+              not physically measured.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <div class="prose">
+            <h2>Appearance is a separate decision</h2>
+            <p>
+              A plausible deformation can still lose the identity of a captured
+              object. The supplied textured shape prior is visibly faceted.
+              PhysTwin’s pretrained Gaussians retain finer fur and color detail,
+              so I implemented a second appearance path and bound both
+              representations to the same response graph.
+            </p>
+            <p>
+              The comparison below changes appearance, not physics. Gaussian
+              centers follow the displacement field; their covariance follows
+              its local derivative. This implementation keeps only constant
+              spherical-harmonic color and the source’s isotropic covariance. It
+              is a reduced appearance model, and its fidelity is demonstrated
+              visually rather than certified by a novel-view benchmark.
+            </p>
+          </div>
+          <figure>
+            <div class="appearance-comparison" id="appearance-compare">
+              <div class="appearance-layer bottom">
+                <img
+                  loading="lazy"
+                  data-static-gif
+                  data-animated-src="./media/measured/sloth-appearance-comparison.gif"
+                  data-static-src="./media/measured/sloth-appearance-comparison.jpg"
+                  src="./media/measured/sloth-appearance-comparison.gif"
+                  alt=""
+                />
+              </div>
+              <div class="appearance-layer top">
+                <img
+                  loading="lazy"
+                  data-static-gif
+                  data-animated-src="./media/measured/sloth-appearance-comparison.gif"
+                  data-static-src="./media/measured/sloth-appearance-comparison.jpg"
+                  src="./media/measured/sloth-appearance-comparison.gif"
+                  alt=""
+                />
+              </div>
+              <button
+                class="divider"
+                type="button"
+                role="slider"
+                aria-label="Appearance comparison divider"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="50"
+              ></button>
+              <div class="labels">
+                <span>Textured shape prior</span
+                ><span>Gaussian appearance</span>
+              </div>
+            </div>
+            <figcaption>
+              <strong>One response, two appearances.</strong> Both use the
+              calibrated source camera and the same fitted rollout. The initial
+              shape and Gaussian appearance come from PhysTwin. Morphic
+              contributes the binding, deformation transport, browser renderer,
+              and comparison. Gaussian training is upstream work. Drag the blue
+              divider to compare them directly.
+            </figcaption>
+          </figure>
+          <div class="prose">
+            <details>
+              <summary>Where the appearance transport fails</summary>
+              <p>
+                A smooth-looking splat does not guarantee a well-behaved
+                deformation map. At the last lift frame, 42 of 2,048 sampled
+                appearance locations have a negative local Jacobian determinant:
+                the displacement field folds there. The graph has no volume or
+                self-collision constraint to prevent this. These are
+                appearance-field diagnostics, not measurements of physical
+                volume.
+              </p>
+              <img
+                loading="lazy"
+                src="./media/measured/sloth-fold-diagnostic.jpg"
+                alt="Late lift frame with red markers at sampled locations where the appearance displacement field folds"
+                loading="lazy"
+              />
+              <p>
+                The analytic derivative agrees with finite differences to 7.6 ×
+                10⁻¹⁰ in this CPU formula check. That validates the derivative
+                calculation, not the physical plausibility of the map or the
+                accuracy of GPU arithmetic. A richer appearance cannot repair an
+                inadequate motion model.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <section id="reproduce">
+          <div class="prose">
+            <h2>What this establishes</h2>
+            <p>
+              Morphic now turns observed motion into a portable, editable
+              response asset and tests it against a separate recording. The
+              controlled experiment identifies a spatial response within its
+              model family. The real experiment demonstrates fitting and
+              interactive deployment, while exposing the limited benefit of that
+              fit on new loading.
+            </p>
+            <p>
+              The next scientific improvement should address those residuals:
+              better rest geometry and contact identification, measured loading
+              where possible, and a model whose behavior remains stable under
+              discretization changes. More material parameters or a different
+              renderer would not resolve those questions by themselves.
+            </p>
+            <details>
+              <summary>Reproduce the experiment</summary>
+              <p>
+                The repository retains the raw-source manifest, exact fitting
+                reports, frozen parameter vectors, unsuccessful pilots, and
+                preparation scripts. Public source data are downloaded from a
+                pinned dataset revision by ZIP member and checked with SHA-256.
+              </p>
+              <pre>
+npm ci
+npm test
+npm run build
+
+python -m venv work/research-venv
+# Activate the environment, then:
+pip install -r requirements-research.txt
+python scripts/fetch-phystwin.py --cases single_lift_sloth single_push_sloth double_lift_sloth double_stretch_sloth --video
+python scripts/fit-measured-joint.py --output work/reproduced-joint
+python scripts/verify-measured.py</pre
+              >
+              <p>
+                CPU preparation and the browser runtime have different
+                requirements. These earlier response experiments used no paid
+                compute; the newer reconstruction pilot used a separately
+                budgeted Runpod GPU. Example assets are available in the
+                replacement
+                <a href="./">capture studio</a>. Archived measured responses
+                remain accessible through the experiment embeds.
+              </p>
+              <p>
+                <a href="./downloads/morphic-source.zip">Source download</a> ·
+                <a href="./measured/experiment.json">Measured report</a> ·
+                <a href="./behavior/study.json">Synthetic report</a> ·
+                <a href="./measured/single_lift_sloth/asset.json"
+                  >Fitted response asset</a
+                >
+              </p>
+            </details>
+          </div>
+        </section>
+        <div class="prose"><h2>Methods and attribution</h2></div>
+        <ol class="references">
+          <li>
+            Jiang et al.
+            <a href="https://arxiv.org/abs/2503.17973"
+              >PhysTwin: Physics-Informed Reconstruction and Simulation of
+              Deformable Objects from Videos</a
+            >.
+            <a href="https://github.com/Jianghanxiao/PhysTwin"
+              >Official implementation</a
+            >;
+            <a href="https://huggingface.co/datasets/Jianghanxiao/PhysTwin"
+              >dataset and pretrained appearance</a
+            >. Source observations and reconstruction are credited to the
+            authors.
+          </li>
+          <li>
+            Modi et al.
+            <a href="https://arxiv.org/abs/2407.09497"
+              >Simplicits: Mesh-Free, Geometry-Agnostic, Elastic Simulation</a
+            >. A representation-independent simulation lead; inspected, not
+            executed in this project.
+          </li>
+          <li>
+            <a href="https://research.nvidia.com/labs/sil/projects/freeform/"
+              >FreeForm: Reduced-Order Deformable Simulation from Particle-Based
+              Skinning Eigenmodes</a
+            >. Official paper and implementation inspected; not a backend in the
+            delivered experiment.
+          </li>
+          <li>
+            <a href="https://arxiv.org/abs/2609.07532"
+              >PhysReal: Learning Real-World Deformable Object Physics via
+              Hybrid Constitutive Modeling</a
+            >. Motivation for staged material capacity; its reported results are
+            not Morphic results.
+          </li>
+          <li>
+            Xie et al.
+            <a href="https://xpandora.github.io/PhysGaussian/">PhysGaussian</a>;
+            Kerbl et al.
+            <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/"
+              >3D Gaussian Splatting</a
+            >. Gaussian appearance and covariance transport. The browser
+            rendering path is independently implemented.
+          </li>
+          <li>
+            Macklin et al.
+            <a
+              href="https://matthias-research.github.io/pages/publications/XPBD.pdf"
+              >XPBD: Position-Based Simulation of Compliant Constrained
+              Dynamics</a
+            >. Established compliant-constraint formulation used by Morphic.
+          </li>
+        </ol>
+
+      <p class="foot">
+        Morphic / Jaundel. Research engineering, implementation, and local
+        experiments. The article reports both useful behavior and failed
+        transfer. Source files, preprocessing assumptions, and licenses are
+        retained with the project.
+      </p>
+    </div>
+  </body>
+</html>

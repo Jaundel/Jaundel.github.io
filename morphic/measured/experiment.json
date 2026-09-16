@@ -1,0 +1,307 @@
+{
+  "protocol": {
+    "preferredModel": "jointUniform",
+    "reason": "Simpler joint fit; regional capacity must show validation benefit.",
+    "fitReportHashes": {
+      "liftUniform": "271e193e8fb390eb51e970187be291dfa9b57947d4705b0befa305bf8bc6c86c",
+      "jointUniform": "d6b6b8628b7ffb621e8b624b3275a558ba5ed92064c5274ae626e2438851a867",
+      "jointRegional": "aabf87d40998332739213d745ca4eb30531077f2f057f7fc535501503c68f480"
+    },
+    "parameters": {
+      "default": [
+        1e-05,
+        1e-05,
+        1e-06,
+        4
+      ],
+      "liftUniform": [
+        3.130186051909758e-05,
+        3.130186051909758e-05,
+        0.0005448956677536761,
+        4.423820619565518
+      ],
+      "jointUniform": [
+        3.932666654378766e-05,
+        3.932666654378766e-05,
+        3.626182441483333e-06,
+        22.068156674473514,
+        0.49142755001850114
+      ],
+      "jointRegional": [
+        4.083243293979627e-05,
+        3.058659060271408e-05,
+        6.084226690936162e-06,
+        20.289230850609687,
+        0.5312573877119545
+      ]
+    },
+    "testCases": [
+      "double_stretch_sloth"
+    ]
+  },
+  "kinematicRadiusMetres": 0.2028583379786984,
+  "metrics": [
+    {
+      "case": "single_lift_sloth",
+      "role": "fit",
+      "model": "default",
+      "filteredTrackRMSEMetres": 0.03945960303085223,
+      "landmarkMeanErrorMetres": 0.018620032399802852,
+      "landmarkSamples": 686
+    },
+    {
+      "case": "single_lift_sloth",
+      "role": "fit",
+      "model": "liftUniform",
+      "filteredTrackRMSEMetres": 0.02445367495523859,
+      "landmarkMeanErrorMetres": 0.019020788590606866,
+      "landmarkSamples": 686
+    },
+    {
+      "case": "single_lift_sloth",
+      "role": "fit",
+      "model": "jointUniform",
+      "filteredTrackRMSEMetres": 0.028873733834533732,
+      "landmarkMeanErrorMetres": 0.013875105459836204,
+      "landmarkSamples": 686
+    },
+    {
+      "case": "single_lift_sloth",
+      "role": "fit",
+      "model": "jointRegional",
+      "filteredTrackRMSEMetres": 0.029171642032296552,
+      "landmarkMeanErrorMetres": 0.013870008183194104,
+      "landmarkSamples": 686
+    },
+    {
+      "case": "single_lift_sloth",
+      "role": "fit",
+      "model": "static",
+      "filteredTrackRMSEMetres": 0.0436193575937074,
+      "landmarkMeanErrorMetres": 0.03139927181428668,
+      "landmarkSamples": 686
+    },
+    {
+      "case": "single_lift_sloth",
+      "role": "fit",
+      "model": "kinematic",
+      "filteredTrackRMSEMetres": 0.06671263651866727,
+      "landmarkMeanErrorMetres": 0.03918711054656327,
+      "landmarkSamples": 686
+    },
+    {
+      "case": "single_push_sloth",
+      "role": "fit",
+      "model": "default",
+      "filteredTrackRMSEMetres": 0.06903349309661214,
+      "landmarkMeanErrorMetres": 0.04642427706079979,
+      "landmarkSamples": 527
+    },
+    {
+      "case": "single_push_sloth",
+      "role": "fit",
+      "model": "liftUniform",
+      "filteredTrackRMSEMetres": 0.07965074013601926,
+      "landmarkMeanErrorMetres": 0.06871919199193441,
+      "landmarkSamples": 527
+    },
+    {
+      "case": "single_push_sloth",
+      "role": "fit",
+      "model": "jointUniform",
+      "filteredTrackRMSEMetres": 0.03671615802794875,
+      "landmarkMeanErrorMetres": 0.03078776552362328,
+      "landmarkSamples": 527
+    },
+    {
+      "case": "single_push_sloth",
+      "role": "fit",
+      "model": "jointRegional",
+      "filteredTrackRMSEMetres": 0.036261562505457645,
+      "landmarkMeanErrorMetres": 0.029994253023617638,
+      "landmarkSamples": 527
+    },
+    {
+      "case": "single_push_sloth",
+      "role": "fit",
+      "model": "static",
+      "filteredTrackRMSEMetres": 0.13884603701544132,
+      "landmarkMeanErrorMetres": 0.10526361638301755,
+      "landmarkSamples": 527
+    },
+    {
+      "case": "single_push_sloth",
+      "role": "fit",
+      "model": "kinematic",
+      "filteredTrackRMSEMetres": 0.06402648686014278,
+      "landmarkMeanErrorMetres": 0.04777008606598485,
+      "landmarkSamples": 527
+    },
+    {
+      "case": "double_lift_sloth",
+      "role": "validation",
+      "model": "default",
+      "filteredTrackRMSEMetres": 0.020322752601177177,
+      "landmarkMeanErrorMetres": 0.016713389898561512,
+      "landmarkSamples": 542
+    },
+    {
+      "case": "double_lift_sloth",
+      "role": "validation",
+      "model": "liftUniform",
+      "filteredTrackRMSEMetres": 0.042453247146678745,
+      "landmarkMeanErrorMetres": 0.0340859466283973,
+      "landmarkSamples": 542
+    },
+    {
+      "case": "double_lift_sloth",
+      "role": "validation",
+      "model": "jointUniform",
+      "filteredTrackRMSEMetres": 0.02388542261319869,
+      "landmarkMeanErrorMetres": 0.020252867251696192,
+      "landmarkSamples": 542
+    },
+    {
+      "case": "double_lift_sloth",
+      "role": "validation",
+      "model": "jointRegional",
+      "filteredTrackRMSEMetres": 0.023664279945752955,
+      "landmarkMeanErrorMetres": 0.019874062746652366,
+      "landmarkSamples": 542
+    },
+    {
+      "case": "double_lift_sloth",
+      "role": "validation",
+      "model": "static",
+      "filteredTrackRMSEMetres": 0.07280080649456479,
+      "landmarkMeanErrorMetres": 0.04994532865652246,
+      "landmarkSamples": 542
+    },
+    {
+      "case": "double_lift_sloth",
+      "role": "validation",
+      "model": "kinematic",
+      "filteredTrackRMSEMetres": 0.05401997795569136,
+      "landmarkMeanErrorMetres": 0.038618983045096936,
+      "landmarkSamples": 542
+    },
+    {
+      "case": "double_stretch_sloth",
+      "role": "test",
+      "model": "default",
+      "filteredTrackRMSEMetres": 0.028194955813348084,
+      "landmarkMeanErrorMetres": 0.022942035706602165,
+      "landmarkSamples": 1711
+    },
+    {
+      "case": "double_stretch_sloth",
+      "role": "test",
+      "model": "liftUniform",
+      "filteredTrackRMSEMetres": 0.034282718885813454,
+      "landmarkMeanErrorMetres": 0.028097872108966422,
+      "landmarkSamples": 1711
+    },
+    {
+      "case": "double_stretch_sloth",
+      "role": "test",
+      "model": "jointUniform",
+      "filteredTrackRMSEMetres": 0.027784164732645025,
+      "landmarkMeanErrorMetres": 0.022951518396966943,
+      "landmarkSamples": 1711
+    },
+    {
+      "case": "double_stretch_sloth",
+      "role": "test",
+      "model": "jointRegional",
+      "filteredTrackRMSEMetres": 0.028078908526391392,
+      "landmarkMeanErrorMetres": 0.023503393263267856,
+      "landmarkSamples": 1711
+    },
+    {
+      "case": "double_stretch_sloth",
+      "role": "test",
+      "model": "static",
+      "filteredTrackRMSEMetres": 0.04382115754035007,
+      "landmarkMeanErrorMetres": 0.030558515508845342,
+      "landmarkSamples": 1711
+    },
+    {
+      "case": "double_stretch_sloth",
+      "role": "test",
+      "model": "kinematic",
+      "filteredTrackRMSEMetres": 0.04558114204565583,
+      "landmarkMeanErrorMetres": 0.03943323070115354,
+      "landmarkSamples": 1711
+    }
+  ],
+  "sourceHashes": {
+    "scripts/measured_graph.py": "252b516be07a059637d2674c3da7ffb746dcb65ebbedba01b7bae55068d196ec",
+    "scripts/evaluate-measured.py": "b3a952894aa0d0a8ce5bfdedb8daec31ff949c12d2e2fb8f1715a1312d09071d"
+  },
+  "media": [
+    {
+      "case": "single_lift_sloth",
+      "path": "public/media/measured/single_lift_sloth-landmarks.mp4",
+      "sha256": "e71ac807f0fb085fbd1c79a50117b9d06ae14df41ee3a37588f5146f809dd712",
+      "sourceSHA256": "6489680d017c447405f2e046634cf69a2d09dc44dbd79735b913727a9b880ed9",
+      "frames": 85,
+      "fps": 30,
+      "width": 1680,
+      "height": 544,
+      "crop": [
+        275,
+        0,
+        663,
+        397
+      ]
+    },
+    {
+      "case": "single_push_sloth",
+      "path": "public/media/measured/single_push_sloth-landmarks.mp4",
+      "sha256": "aa43537ffbcd79e6f0992c65e1452d4f29dc9812dfb53b99cb8c9932b6dfd94f",
+      "sourceSHA256": "3bad779faf55e75fda23a7c75af9d2e7fe28956e23d966ca0f470387da32cc79",
+      "frames": 68,
+      "fps": 30,
+      "width": 1680,
+      "height": 544,
+      "crop": [
+        195,
+        104,
+        786,
+        441
+      ]
+    },
+    {
+      "case": "double_lift_sloth",
+      "path": "public/media/measured/double_lift_sloth-landmarks.mp4",
+      "sha256": "c5acddad7ff4b8a42a9d58a36a1a57b81702f0ac570e4e6950c671d689f7d10d",
+      "sourceSHA256": "d1f833209311e6e1246d4b6062f0311bd19ea52284e21199f7a2c8c407717f9c",
+      "frames": 62,
+      "fps": 30,
+      "width": 1680,
+      "height": 544,
+      "crop": [
+        262,
+        0,
+        689,
+        377
+      ]
+    },
+    {
+      "case": "double_stretch_sloth",
+      "path": "public/media/measured/double_stretch_sloth-landmarks.mp4",
+      "sha256": "5496cd971bc637df892c0a3727bad3e3151af19b5ed7473bccc5671d550b8f12",
+      "sourceSHA256": "a8de4217cf10699895e379b5cdc53fb06bc3d0b86a37b5bef16fd04c355d6e4c",
+      "frames": 192,
+      "fps": 30,
+      "width": 1680,
+      "height": 544,
+      "crop": [
+        237,
+        1,
+        667,
+        403
+      ]
+    }
+  ]
+}

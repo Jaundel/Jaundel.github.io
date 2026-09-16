@@ -28,6 +28,20 @@
     <main class="works-shell selected-works">
         <h1>Selected Works</h1>
 
+        <article class="work-row">
+            <a class="work-media" href="medmnist/index.html" aria-label="Open MedMNIST from scratch article" style="width: 360px; height: 360px; aspect-ratio: 1 / 1; display: block; overflow: hidden;">
+                <img src="assets/figures/medmnist-thumbnail.gif" alt="Chest X-rays from the test set with the network's call under each" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                <span>MedMNIST from scratch</span>
+            </a>
+            <div class="work-copy">
+                <h2><a href="medmnist/index.html">MedMNIST from scratch: One small network, pointed at real medical images</a></h2>
+                <p class="authors">Jaundel Simon</p>
+                <p class="venue">Research article (2026)</p>
+                <p>A two layer network written by hand in numpy, trained on chest X-rays, ultrasounds, blood smears and CT slices. The same gradient then shows what it looks at and breaks it with a perturbation you cannot see, before the network is federated across hospitals, pruned to a tenth of its weights, and trained again without backprop.</p>
+                <p class="work-links"><a href="medmnist/index.html">Article</a> | <a href="medmnist/index.html#try">Try it</a> | <a href="https://github.com/Jaundel/DualMNIST">GitHub</a></p>
+            </div>
+        </article>
+
         <article class="work-row neural-work">
             <a class="work-media neural-media" href="neural-biome/index.html?v=nb-otoro-20260605" aria-label="Open Neural Biome project" style="width: 360px; height: 360px; aspect-ratio: 1 / 1; display: block; overflow: hidden;">
                 <img src="assets/figures/neural-biome-thumbnail.gif?v=full-square-360" alt="" style="width: 100%; height: 100%; object-fit: contain; display: block; transform: scale(1.018); transform-origin: center;">

@@ -3,3 +3,19 @@
 assets/fontawesome-pro-6.6.0-web
 assets/fonts/Athletics
 assets/fonts/Tiempos
+
+# ai assistants
+.claude/
+CLAUDE.md
+.cursor/
+.cursorrules
+.cursorignore
+.codex/
+AGENTS.md
+.aider*
+.windsurf/
+.windsurfrules
+.gemini/
+GEMINI.md
+.github/copilot-instructions.md
+.continue/

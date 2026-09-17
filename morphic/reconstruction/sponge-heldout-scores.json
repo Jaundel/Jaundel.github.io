@@ -1,0 +1,299 @@
+{
+  "schema": 1,
+  "object": "057-kitchen-sponge",
+  "frame": 0,
+  "testCameraCount": 26,
+  "eligibleCameraCount": 23,
+  "missing": [
+    {
+      "camera": "brics-odroid-007_cam1",
+      "reason": "No supplied first-frame segmented preview."
+    },
+    {
+      "camera": "brics-odroid-012_cam1",
+      "reason": "No supplied first-frame segmented preview."
+    },
+    {
+      "camera": "brics-odroid-025_cam0",
+      "reason": "No supplied first-frame segmented preview."
+    }
+  ],
+  "scores": [
+    {
+      "camera": "brics-odroid-002_cam0",
+      "observedPixels": 6043,
+      "observationSha256": "2286a2a8934792f9aa43edd301bea7861ca39b8501b3caf736a8af4059d6d07b",
+      "iou": {
+        "visual-hull": 0.7337017962567517,
+        "single-first": 0.2952885124404447,
+        "single-second": 0.36643098678143254,
+        "two-view": 0.6608707747948255
+      }
+    },
+    {
+      "camera": "brics-odroid-006_cam0",
+      "observedPixels": 16141,
+      "observationSha256": "8f504617b98a0f8616812ee6993fbc9999848ce0bdca1b7b9c54c28e3eebdabb",
+      "iou": {
+        "visual-hull": 0.6905428838201948,
+        "single-first": 0.28984597556853847,
+        "single-second": 0.3176726378976225,
+        "two-view": 0.4704602510460251
+      }
+    },
+    {
+      "camera": "brics-odroid-007_cam0",
+      "observedPixels": 14364,
+      "observationSha256": "e3e1de997f941bcb0304273c9f40aecff89c99929f7d5b335841bee525970aaf",
+      "iou": {
+        "visual-hull": 0.6522741950364425,
+        "single-first": 0.5199757379700768,
+        "single-second": 0.546267432321575,
+        "two-view": 0.5990946129470348
+      }
+    },
+    {
+      "camera": "brics-odroid-008_cam1",
+      "observedPixels": 26614,
+      "observationSha256": "3ef1d54898bb432c6abbe1cb24f94734481042808f84d3428d3aedbb287de521",
+      "iou": {
+        "visual-hull": 0.5832538395497472,
+        "single-first": 0.2333282090699462,
+        "single-second": 0.21711969770843492,
+        "two-view": 0.18920350036229863
+      }
+    },
+    {
+      "camera": "brics-odroid-010_cam0",
+      "observedPixels": 31760,
+      "observationSha256": "b05130a55aedb775daeebc98a1c3357205644548cb3d039aae6777dd7212f71e",
+      "iou": {
+        "visual-hull": 0.5207785726168691,
+        "single-first": 0.33225825367970446,
+        "single-second": 0.32549459475139725,
+        "two-view": 0.3121866366520004
+      }
+    },
+    {
+      "camera": "brics-odroid-010_cam1",
+      "observedPixels": 18849,
+      "observationSha256": "e6bb6c0f3daf4570b71b6630e1afe4505b1f5298995ddbbead619540d1b04d13",
+      "iou": {
+        "visual-hull": 0.4582440070161762,
+        "single-first": 0.3685165623899678,
+        "single-second": 0.3478554191857599,
+        "two-view": 0.3890979555156145
+      }
+    },
+    {
+      "camera": "brics-odroid-011_cam0",
+      "observedPixels": 16926,
+      "observationSha256": "719734be5cad7a24b4287853c57f6b3735cc801e4eeafa46571fde31767c28a9",
+      "iou": {
+        "visual-hull": 0.6078688279115038,
+        "single-first": 0.5092845085053889,
+        "single-second": 0.5302202297195588,
+        "two-view": 0.5702093566029192
+      }
+    },
+    {
+      "camera": "brics-odroid-013_cam0",
+      "observedPixels": 29276,
+      "observationSha256": "f3fcf7f4aa6bd201ac5216891b5822f7bdbb0dd88698410bd0dd5f2e38793f98",
+      "iou": {
+        "visual-hull": 0.5386253557226588,
+        "single-first": 0.46501641828744633,
+        "single-second": 0.4852686016542291,
+        "two-view": 0.484083850931677
+      }
+    },
+    {
+      "camera": "brics-odroid-014_cam1",
+      "observedPixels": 18618,
+      "observationSha256": "feb23eb03dccc0deafc44c764566d486df3b2badfacec37ebe384d4350cb4efc",
+      "iou": {
+        "visual-hull": 0.44303983897493804,
+        "single-first": 0.44987757100881487,
+        "single-second": 0.41973205116235646,
+        "two-view": 0.4065241164289537
+      }
+    },
+    {
+      "camera": "brics-odroid-015_cam0",
+      "observedPixels": 29125,
+      "observationSha256": "2b102a224926b5739db8aed76d672218b7b48f53880810c51fe42ec2f0090d67",
+      "iou": {
+        "visual-hull": 0.422556142668428,
+        "single-first": 0.4002553463134376,
+        "single-second": 0.39011224517131454,
+        "two-view": 0.39072456768758135
+      }
+    },
+    {
+      "camera": "brics-odroid-015_cam1",
+      "observedPixels": 16896,
+      "observationSha256": "29c37220e2c59014faff3637497e9c33640fa3405ac3470ec125ee84498b1ac9",
+      "iou": {
+        "visual-hull": 0.39737526309273247,
+        "single-first": 0.3591111111111111,
+        "single-second": 0.3621438357754917,
+        "two-view": 0.3706374728080961
+      }
+    },
+    {
+      "camera": "brics-odroid-017_cam0",
+      "observedPixels": 17196,
+      "observationSha256": "6346282bb7239693d3000c860f1b72bc45625d9f77fe66b6ed371b25cc6afe6c",
+      "iou": {
+        "visual-hull": 0.8253458498023716,
+        "single-first": 0.6264794491069507,
+        "single-second": 0.6104690334283494,
+        "two-view": 0.47885520961916517
+      }
+    },
+    {
+      "camera": "brics-odroid-017_cam1",
+      "observedPixels": 19470,
+      "observationSha256": "679a78cea8650abe5ec7cea2586dd4b07b39d4325336e4b7862e42a8210f8cf3",
+      "iou": {
+        "visual-hull": 0.8284493806065784,
+        "single-first": 0.4692367601246106,
+        "single-second": 0.4611674137595011,
+        "two-view": 0.3487166078354469
+      }
+    },
+    {
+      "camera": "brics-odroid-019_cam1",
+      "observedPixels": 27838,
+      "observationSha256": "c19b94bb44b2a2462ae6d2ee2676b29c605a1d2227c5e1254d4e2dcca4aa89f0",
+      "iou": {
+        "visual-hull": 0.4954531539805161,
+        "single-first": 0.5188157223072997,
+        "single-second": 0.4501249421564091,
+        "two-view": 0.40669388894705616
+      }
+    },
+    {
+      "camera": "brics-odroid-021_cam0",
+      "observedPixels": 25522,
+      "observationSha256": "04852743045100c8183128e08bcd2284775adf318c5909f766eb3a89a68b5992",
+      "iou": {
+        "visual-hull": 0.8861560084328882,
+        "single-first": 0.5202717196996782,
+        "single-second": 0.5132174412757704,
+        "two-view": 0.42425279879489197
+      }
+    },
+    {
+      "camera": "brics-odroid-022_cam0",
+      "observedPixels": 25712,
+      "observationSha256": "adc5191745f6e0ef127f1841d86b2a6e01e56c5addd6cad2793340da77a1701d",
+      "iou": {
+        "visual-hull": 0.7691980558930741,
+        "single-first": 0.574723458359822,
+        "single-second": 0.6347778185824459,
+        "two-view": 0.6888437785910339
+      }
+    },
+    {
+      "camera": "brics-odroid-022_cam1",
+      "observedPixels": 25192,
+      "observationSha256": "f38bff953329f7f3469be2d79ca6041654ca83638aaeaec9d479717daaf1c51c",
+      "iou": {
+        "visual-hull": 0.880035746201966,
+        "single-first": 0.6647801604004323,
+        "single-second": 0.7240305522914219,
+        "two-view": 0.7194238113854389
+      }
+    },
+    {
+      "camera": "brics-odroid-023_cam0",
+      "observedPixels": 19253,
+      "observationSha256": "6ad821657c557a2c9b82bc16bc9494607d765b2cd909e988c496a9968501c110",
+      "iou": {
+        "visual-hull": 0.887009376619705,
+        "single-first": 0.450266260935717,
+        "single-second": 0.4849047619047619,
+        "two-view": 0.4473251780171627
+      }
+    },
+    {
+      "camera": "brics-odroid-024_cam0",
+      "observedPixels": 19288,
+      "observationSha256": "c774bf71181b3fa3c0b570ba100354a0bb6ead3cac99871dc732bc3625da88b3",
+      "iou": {
+        "visual-hull": 0.7720018239854081,
+        "single-first": 0.2585669781931464,
+        "single-second": 0.2889312469524358,
+        "two-view": 0.3747760832728153
+      }
+    },
+    {
+      "camera": "brics-odroid-025_cam1",
+      "observedPixels": 14127,
+      "observationSha256": "862f68bc2cf2f491c13ace19ea7e620f229957ca8875d63c9cb28d7e9b8e0475",
+      "iou": {
+        "visual-hull": 0.0,
+        "single-first": 0.0,
+        "single-second": 0.0,
+        "two-view": 0.0
+      }
+    },
+    {
+      "camera": "brics-odroid-027_cam0",
+      "observedPixels": 37503,
+      "observationSha256": "fb1e3c685658825f42c242cbe0a350e9f57707df74a211f0b7a875e0c9b35c7f",
+      "iou": {
+        "visual-hull": 0.6828889802939087,
+        "single-first": 0.42241604721527026,
+        "single-second": 0.47232200249555717,
+        "two-view": 0.5578214678226889
+      }
+    },
+    {
+      "camera": "brics-odroid-027_cam1",
+      "observedPixels": 57803,
+      "observationSha256": "9952b37c0086cd0304a256cd21b1713e325ccbeb0d8c28ea9539193acf8bdd94",
+      "iou": {
+        "visual-hull": 0.7140371229698376,
+        "single-first": 0.49123544102887284,
+        "single-second": 0.558686581604886,
+        "two-view": 0.5635253033157724
+      }
+    },
+    {
+      "camera": "brics-odroid-028_cam0",
+      "observedPixels": 21917,
+      "observationSha256": "7f31ec754748a37a0e13f7bd4dc3a5dae8635fa0277e62eb52cce00d4e1a562b",
+      "iou": {
+        "visual-hull": 0.8352196943714035,
+        "single-first": 0.7360376044568245,
+        "single-second": 0.7254441141909173,
+        "two-view": 0.6787216718686389
+      }
+    }
+  ],
+  "summary": {
+    "visual-hull": {
+      "meanIoU": 0.6358285180793086,
+      "medianIoU": 0.6828889802939087
+    },
+    "single-first": {
+      "meanIoU": 0.43285164383363045,
+      "medianIoU": 0.450266260935717
+    },
+    "single-second": {
+      "meanIoU": 0.4448866800335491,
+      "medianIoU": 0.4611674137595011
+    },
+    "two-view": {
+      "meanIoU": 0.45791516935857113,
+      "medianIoU": 0.4473251780171627
+    }
+  },
+  "limitations": [
+    "One object/frame; cameras are correlated, not independent object trials.",
+    "Supplied masks/calibration and two-view pose alignment aid both learned generators.",
+    "Silhouette agreement does not establish hidden concavities, texture or physical behavior."
+  ]
+}

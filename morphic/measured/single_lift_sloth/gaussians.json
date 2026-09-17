@@ -1,0 +1,11 @@
+{
+  "source": "PhysTwin pretrained appearance; not trained by Morphic",
+  "sourceSHA256": "2cf1e1578d787d2f1538bf036b1f653bcffc44b9d02fde2e84bc0ab860664137",
+  "sourceCount": 238733,
+  "count": 227714,
+  "columns": "xyz, sigma, rgb, opacity, 4 node indices, 4 weights",
+  "approximation": "SH0 only; original isotropic covariance. Alpha < .015 and sigma < .04 mm removed.",
+  "binding": "4 nearest nodes, inverse squared rest distance; identical displacement rule to mesh/track interpolation",
+  "bytes": 14573696,
+  "sha256": "335024f58bed457ad4a15723554a7f64a3268b373615a96b5a1544d0bee8b31b"
+}

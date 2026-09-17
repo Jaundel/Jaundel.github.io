@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Use Morphic's examples in your browser, or create objects with your own GPU."
+    />
+    <link rel="icon" href="./favicon.svg" />
+    <title>Morphic — Make an object</title>
+    <style>
+      .guide {
+        max-width: 760px;
+        margin: 64px auto;
+        padding: 0 24px 80px;
+        line-height: 1.7;
+      }
+      .guide h1 {
+        font-size: clamp(36px, 7vw, 60px);
+        line-height: 1.05;
+      }
+      .guide h2 {
+        margin-top: 48px;
+        font-size: 27px;
+      }
+      .guide pre {
+        overflow: auto;
+        padding: 18px;
+        background: #f2f5f8;
+        font-size: 13px;
+      }
+      .guide a {
+        color: #1d63b7;
+        text-decoration: underline;
+      }
+      .guide li {
+        margin: 10px 0;
+      }
+      .guide nav {
+        display: flex;
+        gap: 24px;
+      }
+      .guide img {
+        width: 100%;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/research-article-DF_8F5Sq.css">
+  </head>
+  <body>
+    <main class="guide">
+      <nav>
+        <a href="./">Studio</a><a href="./article.html">How it works</a>
+      </nav>
+      <h1>Make an object.<br />Keep it yours.</h1>
+      <p>
+        The examples run in your browser. You can play, pull, edit and save them
+        without an account or a cloud GPU. A WebGL 2 browser is required.
+      </p>
+      <p>
+        <a href="./?asset=capture_glove"
+          >Explore the glove and its input photographs</a
+        >
+        or <a href="./">try the sloth's recorded motion</a>.
+      </p>
+
+      <h2>Start with a capture</h2>
+      <p>
+        Keep the object still and move the camera around it in even light.
+        Include the back and top. Use overlapping photos or a short orbit video;
+        avoid blur, mirrors, transparent surfaces and changing the object's
+        shape.
+      </p>
+      <p>
+        <a href="./?mode=capture&capture=1">Review your capture</a> to choose up
+        to twelve views. Originals and your selection stay in this browser until
+        you explicitly submit views to your own configured worker. Browser
+        storage is not a backup; keep the original files.
+      </p>
+
+      <h2>Run Morphic on your computer</h2>
+      <p>
+        <a href="./downloads/morphic-source.zip" download
+          >Download the Morphic source</a
+        >, extract it, and install
+        <a href="https://nodejs.org/">Node.js 22.12 or later</a>. In the
+        extracted folder:
+      </p>
+      <pre><code>npm ci
+npm run examples:download
+npm run dev</code></pre>
+      <p>
+        The example download is approximately 146 MB, fetched once and checked
+        against recorded file hashes. The source archive contains no model
+        weights, cloud credentials or personal captures.
+      </p>
+
+      <h2>Create using your own GPU</h2>
+      <p>
+        Reconstruction runs outside the browser. The current backend is
+        Microsoft's
+        <a href="https://github.com/microsoft/TRELLIS#-installation">TRELLIS</a
+        >, which requires Linux and an NVIDIA GPU with at least 16 GB of VRAM.
+        Morphic's tested configuration is an A100 with 80 GB. AMD integrated
+        graphics can display the studio but cannot run this CUDA reconstruction
+        path. Other compatible GPUs have not been tested here.
+      </p>
+      <ol>
+        <li>
+          Install the official TRELLIS environment on your Linux GPU machine,
+          following its upstream installation instructions. Use source revision
+          <code>442aa1e1afb9014e80681d3bf604e8d728a86ee7</code> to reproduce
+          this example.
+        </li>
+        <li>
+          In that environment, run the included worker on one or more
+          photographs. Set the paths for your machine; the output folder must be
+          new.
+        </li>
+      </ol>
+      <pre><code>python scripts/reconstruct-baseline.py \
+  --source /path/to/TRELLIS \
+  --images /path/to/front.jpg /path/to/back.jpg \
+  --output /path/to/new-object</code></pre>
+      <p>
+        The worker writes <code>asset.glb</code> and <code>result.json</code>.
+        In the studio, choose an everyday object, open
+        <strong>Save and open → Open 3D file</strong>, and select both files.
+        Morphic verifies the result and prepares it for interaction. This is a
+        technical installation, not a one-click GPU installer.
+      </p>
+      <p>
+        For a prepared Runpod worker under your own account, the source includes
+        <code>docs/GPU_SETUP.md</code> and
+        <code>npm run studio:gpu -- --help</code>. This connects the local
+        studio through SSH. It does not rent hardware or stop billing; you
+        control the worker and stop it after saving your outputs.
+      </p>
+
+      <h2>What to expect</h2>
+      <p>
+        The seven-photo glove run took about 126 seconds after the worker was
+        installed: 97 seconds loading and preparing inputs, 6 seconds of
+        inference and 23 seconds exporting. Initial installation and downloads
+        take additional time. These are one run's measurements, not a speed
+        guarantee.
+      </p>
+      <p>
+        Hidden surfaces are generated estimates. More views do not always
+        improve them. Reconstructed objects use assigned simulation; photographs
+        alone do not establish how an object bends. The sloth study separately
+        fits a response to observed motion, with its limitations explained in
+        the article.
+      </p>
+      <h2>Save something you can reopen</h2>
+      <p>
+        <strong>Save session</strong> keeps the appearance, simulation and
+        interaction history together. Reopen it in the corresponding workspace
+        and replay your actions. <strong>Export 3D shape</strong> saves a static
+        GLB for other tools; it does not include the physical simulation. The
+        sloth workspace also exports a video.
+      </p>
+      <p>
+        Source code is MIT. Included datasets and example assets retain their
+        own licenses; the glove example is CC BY-NC 4.0. See
+        <code>THIRD_PARTY_NOTICES.md</code> in the source archive.
+      </p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "state": "completed",
+  "stage": "completed",
+  "method": "trellis-multi-image",
+  "behavior": "assigned",
+  "hiddenSurfaces": "generated-unverified",
+  "seed": 42,
+  "pipeline": "trellis-image-large",
+  "inputs": [
+    {
+      "name": "view-0.png",
+      "sha256": "cdd73c86fe1f69001cc66493f1997c0bd8192b8eec6fc1c39c85fdea72fa016e",
+      "bytes": 749282
+    },
+    {
+      "name": "view-1.png",
+      "sha256": "d4cfdbc9019d01a22e6900c31c1274e5909c77783ff0a436a78bea6ef387926b",
+      "bytes": 709283
+    },
+    {
+      "name": "view-2.png",
+      "sha256": "5fcf31cb889fee8178efd3e41914dd8943a7145a97fbfc8f557c5d5c4c3ac2e6",
+      "bytes": 666973
+    },
+    {
+      "name": "view-3.png",
+      "sha256": "715dac8067d1076abb9c60140ab79c9020f82a923754cbd2daae03b9abf40b87",
+      "bytes": 693460
+    },
+    {
+      "name": "view-4.png",
+      "sha256": "9174c71609ee902f603838ee59d173819d3b5759fd92a89473f55bc8f591ff6b",
+      "bytes": 655185
+    },
+    {
+      "name": "view-5.png",
+      "sha256": "e356e0daf68dd44ff35bb82a5d46e036b403815a2af0d3579a9497c3bbb7d938",
+      "bytes": 630996
+    },
+    {
+      "name": "view-6.png",
+      "sha256": "9949ae4100214fe45e6d9ca85b7a8bcb4041932f4fe4a5ac2e5328e4a5e8db1f",
+      "bytes": 667871
+    }
+  ],
+  "sourceCommit": "442aa1e1afb9014e80681d3bf604e8d728a86ee7",
+  "input": {
+    "name": "view-0.png",
+    "sha256": "cdd73c86fe1f69001cc66493f1997c0bd8192b8eec6fc1c39c85fdea72fa016e",
+    "bytes": 749282
+  },
+  "checkpointRevision": "25e0d31ffbebe4b5a97464dd851910efc3002d96",
+  "gpu": "NVIDIA A100 80GB PCIe",
+  "torchVersion": "2.6.0+cu124",
+  "loadSeconds": 96.78261740878224,
+  "inferenceSeconds": 6.370056297630072,
+  "exportSeconds": 22.69546338170767,
+  "peakMemoryBytes": 10654974464,
+  "elapsedSeconds": 125.84971386566758,
+  "output": {
+    "name": "asset.glb",
+    "bytes": 1733504,
+    "sha256": "942ef1b0bab9d4f8bac20f88e45a09306cac544c6dbf1a97be4aa2aeadcec748"
+  }
+}

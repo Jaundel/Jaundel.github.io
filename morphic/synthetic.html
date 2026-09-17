@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="./favicon.svg" />
+    <title>Morphic — Capturing response</title>
+    <meta
+      name="description"
+      content="A reproducible experiment in fitting, testing, and editing object behavior."
+    />
+    <script type="module" crossorigin src="./assets/synthetic-BkcyxTWF.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="./assets/three.module-DAQ7URuL.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-BQ9_He4D.js">
+    <link rel="stylesheet" crossorigin href="./assets/synthetic-BrXRd8vj.css">
+  </head>
+  <body>
+    <nav>
+      <a href="./article.html">Measured article</a><a href="#evidence">Measurements</a
+      ><a href="#method">Method & limits</a>
+    </nav>
+    <main>
+      <h1>Capturing response.</h1>
+      <p class="lead">
+        An object should carry more than its shape. Can a fitted response
+        survive a different interaction?
+      </p>
+      <p>
+        Pull a known object sideways, observe its motion, then ask the fitted
+        model to predict a larger pull in another direction. This first
+        experiment makes that question reproducible inside Morphic.
+      </p>
+      <p class="scope">
+        <strong>Controlled synthetic experiment.</strong> The orange reference
+        comes from a hidden XPBD model, with noise added to sparse observations
+        for fitting. It is not a recording of a real object. The experiment
+        verifies identification within this model family; this experiment alone does not validate a real object.
+      </p>
+      <section
+        class="demonstration"
+        aria-label="Synchronized behavior comparison"
+      >
+        <div class="view-labels">
+          <span>Reference response</span><span>Assigned preset</span
+          ><span id="model-label">Fitted regional response</span>
+        </div>
+        <div id="comparison" aria-label="Three synchronized 3D specimens"></div>
+        <div class="controls">
+          <button id="play">Play comparison</button>
+          <label
+            >Time
+            <input
+              id="time"
+              type="range"
+              min="0"
+              max="29"
+              value="7"
+              step="1" /></label
+          ><output id="clock"></output>
+          <label
+            >Compare
+            <select id="model">
+              <option value="regional">Regional fit</option>
+              <option value="uniform">Uniform fit</option>
+              <option value="edited">Intentional edit</option>
+            </select></label
+          >
+        </div>
+        <div class="controls">
+          <label
+            >Interaction
+            <select id="trial">
+              <option value="test">Held-out: larger pull along z</option>
+              <option value="other">Held-out: lower, opposite-side pull</option>
+              <option value="train">Fitting: pull along x</option>
+            </select></label
+          >
+          <label
+            ><input id="wire" type="checkbox" /> Show simulation edges</label
+          >
+          <label id="edit-control" hidden
+            >Upper-region stiffness multiplier
+            <input
+              id="edit"
+              type="range"
+              min="-1"
+              max="1"
+              step=".1"
+              value=".7"
+            /><output id="edit-value">5×</output></label
+          >
+        </div>
+        <p>
+          The black marker shows the prescribed handle and disappears on
+          release. Surface bands are fixed in rest space; they are visual
+          markers, not a recovered material map.
+        </p>
+        <div id="error-plot"></div>
+        <p>
+          Point error (mm): <span style="color: #687c91">preset</span>,
+          <span style="color: #ae3674">uniform fit</span>,
+          <span style="color: #225cc2">regional fit</span>. The dashed cursor
+          follows the shared clock. Deliberate edits are excluded from accuracy
+          scoring.
+        </p>
+        <p id="comparison-note">
+          All three panels receive the same action and share one clock. The fit
+          never receives the held-out reference motion.
+        </p>
+        <div class="controls">
+          <button id="export">Export physical asset</button
+          ><button id="import">Load physical asset</button
+          ><input id="asset-file" type="file" accept=".json" hidden /><output
+            id="asset-status"
+            aria-live="polite"
+          ></output>
+        </div>
+      </section>
+      <section>
+        <h2>Fit the motion. Test the response.</h2>
+        <p>
+          The known specimen is pulled for 0.55 seconds, then released. The
+          fitting loss uses sparse points away from the pinned base and driven
+          node. The separate test uses a larger pull along another axis.
+          Supplying the test action is allowed; supplying its resulting motion
+          to the predictor is not.
+        </p>
+        <p>
+          We first fit one edge compliance and a damping rate. We then allow the
+          lower and upper regions to have different edge compliances. Geometry,
+          density, volume compliance, timestep, and iteration count stay fixed.
+          This isolates the contribution of spatial variation.
+        </p>
+        <p id="finding">Loading recorded measurements…</p>
+      </section>
+      <section id="evidence">
+        <h2>Every attempted case.</h2>
+        <p>
+          Errors below are Euclidean 3D point RMSE on the held-out interaction,
+          in millimetres. Three independent noise seeds are reported for both
+          material configurations. Each coordinate receives bounded noise with a
+          standard deviation of 0.5 mm. The corresponding 3D noise floor is
+          approximately 0.87 mm.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Hidden material</th>
+                <th>Noise seed</th>
+                <th>Preset</th>
+                <th>Uniform fit</th>
+                <th>Regional fit</th>
+              </tr>
+            </thead>
+            <tbody id="results"></tbody>
+          </table>
+        </div>
+        <p id="timings"></p>
+        <details>
+          <summary>Second held-out action: change the attachment point</summary>
+          <p>
+            The second test pulls a lower point from the opposite side of the
+            specimen. It tests changed loading support as well as direction.
+            This motion is also withheld from fitting.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hidden material</th>
+                  <th>Noise seed</th>
+                  <th>Preset</th>
+                  <th>Uniform fit</th>
+                  <th>Regional fit</th>
+                </tr>
+              </thead>
+              <tbody id="other-results"></tbody>
+            </table>
+          </div>
+        </details>
+        <details>
+          <summary>Raw evidence and reproduction</summary>
+          <p>
+            <a href="./behavior/study.json" download
+              >Download observations, fitted asset, trajectories, and full
+              results</a
+            >. The Node command <code>npm run behavior:study</code> regenerates
+            this evidence from fixed seeds.
+            <code>npm run behavior:fit -- dataset.json output.json</code> fits a
+            supplied observation dataset. Source hashes accompany the experiment
+            in the repository.
+          </p>
+          <p>
+            These are independent Morphic implementations of bounded pattern
+            search, regional XPBD response fields, a train/test observation
+            contract, and portable deployment checks. No upstream experiment or
+            timing is reported as a Morphic result.
+          </p>
+        </details>
+      </section>
+      <section>
+        <h2>More parameters need a reason.</h2>
+        <p>
+          A uniform specimen is a negative control: two regions should add
+          little when one response already explains the data. The heterogeneous
+          case asks whether that extra freedom improves a different action,
+          rather than only the fit.
+        </p>
+        <p id="ablations"></p>
+        <p>
+          Editing the upper region reruns the same solver with a changed
+          compliance. It is a hypothetical intervention, not a newly observed
+          property. The exported asset records this provenance. Increasing
+          discrete stiffness does not identify a material's Young's modulus.
+        </p>
+      </section>
+      <section id="method">
+        <h2>The model has boundaries.</h2>
+        <p id="sensitivity"></p>
+        <p>
+          The physical asset binds its response to the exact rest geometry, edge
+          and tetrahedron topology, density, timestep, and solver iterations.
+          Loading it with a different configuration fails explicitly. Fitting
+          and browser playback execute the same JavaScript solver; an exported
+          action session recomputes motion rather than storing an animation.
+        </p>
+        <p>
+          Known geometry is an intentional starting point. The specimen uses
+          metre coordinates, a prescribed density of 100 kg/m³, zero gravity, a
+          pinned base, and Morphic's compliant positional handle. These are
+          controlled assumptions, not measured properties. Bulk response is
+          fixed, contact is untested here, and finite solver iterations
+          contribute numerical damping.
+        </p>
+        <p>
+          There is no physical validation in a same-solver synthetic test. Real
+          observations can disagree because of scale, loading, tracking, hidden
+          support, hysteresis, or a wrong model. A better optimizer cannot
+          resolve those ambiguities by itself.
+        </p>
+        <details>
+          <summary>Why this research combination?</summary>
+          <p>
+            <a href="https://arxiv.org/html/2503.17973v1">PhysTwin</a> motivates
+            fitting observed motion and testing novel interactions. Morphic
+            adopts that experimental separation without reproducing its
+            reconstruction or differentiable spring-mass pipeline.
+          </p>
+          <p>
+            <a href="https://arxiv.org/html/2609.07532v1">PhysReal</a> motivates
+            global-to-local fitting. Here that becomes two rest-space regions,
+            without MPM or neural constitutive residuals.
+          </p>
+          <p>
+            <a href="https://research.nvidia.com/labs/sil/projects/freeform/"
+              >FreeForm</a
+            >
+            and <a href="https://arxiv.org/html/2407.09497v1">Simplicits</a> are
+            candidates for compact simulation. They do not supply observation
+            fitting automatically. Switching to their continuum dynamics would
+            require a new calibration and a matched approximation study.
+            Morphic's current tetrahedral XPBD solver is neither method.
+          </p>
+          <p>
+            <a href="https://arxiv.org/html/2311.12198v1">PhysGaussian</a>
+            provides an appearance route when Gaussian capture earns its added
+            complexity. There is no measured appearance advantage for it in this
+            experiment, so the existing textured-mesh path remains.
+          </p>
+        </details>
+      </section>
+      <section class="baseline">
+        <h2>The captured surface stays useful.</h2>
+        <img
+          src="./baseline-tablet.png"
+          alt="The existing Morphic studio deforming a textured museum tablet"
+          loading="lazy"
+        />
+        <p>
+          The existing studio retains textured GLBs, GPU deformation, mouse
+          interaction, export, and deterministic replay. This museum scan
+          demonstrates retained appearance under assigned motion. Its behavior
+          is fictional; the new synthetic fit is not transferred onto it.
+        </p>
+        <p>
+          <a href="./">Open the original capture studio</a>. A real
+          behavior-capture result must connect that appearance to measured
+          motion of the same object and test it under a separate action.
+        </p>
+      </section>
+      <section>
+        <h2>The next decisive experiment.</h2>
+        <p>
+          Use a compliant object with measured dimensions and mass, known
+          supports, tracked surface points, and a measured or prescribed
+          actuator path. Fit one trial. Freeze the model. Predict a second trial
+          before reading its motion. Compare against the preset and uniform fit,
+          publish synchronized recordings, and retain failures.
+        </p>
+        <p>
+          <a href="https://pokeflex-dataset.github.io/">PokeFlex</a> is a useful
+          candidate because it pairs deformation with interaction information.
+          Its data portal requires registration. This release does not claim to
+          have evaluated that dataset.
+        </p>
+      </section>
+    </main>
+    <footer>
+      Morphic · Controlled synthetic identification. See the measured article for real observations and transfer failures.
+    </footer>
+  </body>
+</html>

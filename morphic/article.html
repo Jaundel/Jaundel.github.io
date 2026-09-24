@@ -11,21 +11,47 @@
     <title>Morphic — From observed motion to editable objects</title>
     <script type="module" crossorigin src="./assets/article-opXE5isk.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="stylesheet" crossorigin href="./assets/research-article-DF_8F5Sq.css">
+    <link rel="stylesheet" href="./assets/article-page.css?v=20260924" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" />
+    <link rel="stylesheet" href="/assets/fontawesome-free-7.2.0-web/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/stylesheets/site-nav.css?v=20260924" />
+    <link rel="stylesheet" href="/assets/stylesheets/article.css?v=20260924" />
   </head>
-  <body>
-    <div class="shell">
-      <nav class="article-nav">
-        <a href="https://jaundel.github.io/projects.html">Jaundel / Projects</a
-        ><a href="./">Studio</a><a href="#experiments">Results</a
-        ><a href="./downloads/morphic-source.zip">Code</a>
-      </nav>
-      <header class="hero">
-        <p class="project-name">Morphic</p>
-        <h1>From observed motion<br />to editable objects</h1>
-        <p>How captured shape, observed motion and physical simulation come together in an object you can interact with.</p>
-        <div class="links"><a href="./">Open the studio</a><a href="#experiments">Explore the experiments</a><a href="#reproduce">Methods and reproduction</a></div>
+  <body class="article-page" style="--article-tint: #efe9df; --article-tint-2: #faf8f4; --nav-dot: #d9822b;">
+    <div class="article-top">
+      <header class="site-shell site-nav">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a class="active" href="/projects.html">Projects</a>
+          <a href="/assets/Jaundel_Simon_Resume.pdf?v=20260917-resume">Resume</a>
+          <a href="/about.html">About</a>
+        </nav>
+        <nav class="social-links" aria-label="Social links">
+          <a href="https://www.instagram.com/tsampurado/?hl=en" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://github.com/Jaundel" aria-label="GitHub"><i class="fa-brands fa-github-alt"></i></a>
+          <a href="https://www.linkedin.com/in/jaundelsimon/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </nav>
       </header>
+      <header class="site-shell article-hero">
+        <div class="article-intro">
+          <h1 class="article-title">Morphic: From observed motion to editable objects</h1>
+          <p class="article-byline">Jaundel Simon</p>
+          <p class="article-abstract">How captured shape, observed motion and physical simulation come together in an object you can interact with.</p>
+          <p class="article-links">
+            <a class="article-button" href="./">Studio <i class="fa-solid fa-cube" aria-hidden="true"></i></a>
+            <a class="article-button" href="./downloads/morphic-source.zip">Code <i class="fa-solid fa-code" aria-hidden="true"></i></a>
+            <a class="article-button" href="#reproduce">Methods <i class="fa-solid fa-flask" aria-hidden="true"></i></a>
+          </p>
+          <p class="article-venue">Research engineering &middot; 2026</p>
+        </div>
+        <figure class="article-cover">
+          <img src="../assets/figures/morphic-thumbnail.gif" alt="A captured sloth toy responding to a simulated lift" />
+        </figure>
+      </header>
+    </div>
+    <main class="shell site-shell article-body">
       <p class="prose" id="article-status" role="status"></p>
         <figure
           data-gif-comparison
@@ -630,12 +656,16 @@ python scripts/verify-measured.py</pre
           </li>
         </ol>
 
-      <p class="foot">
+      <p class="article-note">
         Morphic / Jaundel. Research engineering, implementation, and local
         experiments. The article reports both useful behavior and failed
         transfer. Source files, preprocessing assumptions, and licenses are
         retained with the project.
       </p>
-    </div>
+    </main>
+    <footer class="site-shell article-footer">
+      <p>Morphic &middot; Jaundel Simon &middot; 2026</p>
+      <p><a href="/projects.html">All projects</a></p>
+    </footer>
   </body>
 </html>

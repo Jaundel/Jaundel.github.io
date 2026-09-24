@@ -1,0 +1,353 @@
+/* Project article layout, shared by every article on jaundel.github.io.
+   Modelled on shikun.io project pages: the site header stays, a tinted
+   title band introduces the work, and the text runs in one reading column
+   with wider figures. Load after site-nav.css and after the article's own
+   stylesheet; the article stylesheet keeps only its interactive parts.
+
+   Per-article hooks, set on <body class="article-page">:
+     --article-tint, --article-tint-2   title band gradient
+     --nav-dot                          accent for the active nav dot */
+
+@font-face {
+  font-family: "Charter";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("../fonts/Charter/charter_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Charter";
+  font-style: italic;
+  font-weight: normal;
+  font-display: swap;
+  src: url("../fonts/Charter/charter_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Charter";
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url("../fonts/Charter/charter_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Charter";
+  font-style: italic;
+  font-weight: bold;
+  font-display: swap;
+  src: url("../fonts/Charter/charter_bold_italic.woff2") format("woff2");
+}
+
+:root {
+  --article-sans: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  --article-serif: "Charter", Georgia, "Times New Roman", serif;
+  --article-mono: "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+  --article-ink: #161b22;
+  --article-text: #353535;
+  --article-muted: #646c74;
+  --article-line: #e2e6ea;
+  --article-link: #1d63b7;
+  --article-column: 680px;
+  --article-wide: 982px;
+}
+
+body.article-page {
+  --article-tint: #f4f4f2;
+  --article-tint-2: #ffffff;
+  margin: 0;
+  background: #ffffff;
+  color: var(--article-text);
+  font-family: var(--article-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- title band ---------- */
+
+.article-top {
+  background: linear-gradient(160deg, var(--article-tint) 0%, var(--article-tint) 45%, var(--article-tint-2) 100%);
+  padding-bottom: 64px;
+}
+
+.article-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  gap: 56px;
+  align-items: center;
+  padding-top: 56px;
+}
+
+.article-intro {
+  min-width: 0;
+}
+
+.article-hero .article-title {
+  margin: 0 0 20px;
+  padding: 0;
+  color: var(--article-ink);
+  font-family: var(--article-sans);
+  font-size: clamp(28px, 3.1vw, 38px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.article-hero .article-byline {
+  margin: 0 0 18px;
+  color: var(--article-ink);
+  font-family: var(--article-sans);
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.article-hero .article-meta {
+  margin: -12px 0 18px;
+  color: var(--article-muted);
+  font-family: var(--article-sans);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.article-hero .article-abstract {
+  max-width: 36em;
+  margin: 0 0 26px;
+  color: var(--article-text);
+  font-family: var(--article-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.article-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.article-links .article-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(22, 27, 34, 0.08), 0 0 0 1px rgba(22, 27, 34, 0.06);
+  color: var(--article-ink);
+  font-family: var(--article-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.article-links .article-button:hover,
+.article-links .article-button:focus-visible {
+  box-shadow: 0 3px 10px rgba(22, 27, 34, 0.12), 0 0 0 1px rgba(22, 27, 34, 0.1);
+  color: var(--article-ink);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.article-links .article-button i {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.article-hero .article-venue {
+  margin: 0;
+  color: var(--article-ink);
+  font-family: var(--article-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.article-cover {
+  justify-self: end;
+  width: 100%;
+  max-width: 380px;
+  margin: 0;
+}
+
+.article-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+/* ---------- reading column ---------- */
+
+.article-body {
+  padding: 48px 0 8px;
+  color: var(--article-text);
+  font-family: var(--article-serif);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.article-column {
+  max-width: var(--article-column);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+:where(.article-body) :where(p, li, blockquote, dd) {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+:where(.article-body) :where(strong, b) {
+  font-weight: bold;
+}
+
+:where(.article-body) :where(a) {
+  color: var(--article-link);
+  text-decoration: none;
+}
+
+:where(.article-body) :where(a:hover) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:where(.article-body) :where(h2) {
+  margin: 64px 0 18px;
+  padding: 0;
+  color: var(--article-ink);
+  font-family: var(--article-sans);
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+:where(.article-body) :where(h3) {
+  margin: 36px 0 10px;
+  padding: 0;
+  color: var(--article-ink);
+  font-family: var(--article-sans);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+:where(.article-body) :where(figcaption) {
+  color: var(--article-muted);
+  font-family: var(--article-sans);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+:where(.article-body) :where(figcaption strong, figcaption b) {
+  color: var(--article-ink);
+  font-weight: 500;
+}
+
+:where(.article-body) :where(code) {
+  font-family: var(--article-mono);
+  font-size: 0.84em;
+}
+
+:where(.article-body) :where(table) {
+  font-family: var(--article-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Closing note at the end of the article: credits, scope, licences. */
+.article-note {
+  max-width: var(--article-column);
+  margin: 48px auto 0;
+  color: var(--article-muted);
+  font-family: var(--article-sans);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+/* ---------- footer ---------- */
+
+.article-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 72px;
+  margin-bottom: 0;
+  padding: 22px 0 44px;
+  border-top: 1px solid var(--article-line);
+  background: none;
+  color: var(--article-muted);
+  font-family: var(--article-sans);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.article-footer p {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+.article-footer a {
+  color: var(--article-ink);
+  text-decoration: none;
+}
+
+.article-footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- small screens ---------- */
+
+@media screen and (max-width: 980px) {
+  .article-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 36px;
+  }
+
+  .article-cover {
+    justify-self: start;
+    max-width: 360px;
+  }
+
+  .article-top {
+    padding-bottom: 44px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .article-body {
+    font-size: 17px;
+    padding-top: 36px;
+  }
+
+  :where(.article-body) :where(h2) {
+    margin-top: 48px;
+    font-size: 22px;
+  }
+
+  .article-hero .article-abstract {
+    font-size: 15px;
+  }
+
+  .article-footer {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

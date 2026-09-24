@@ -1,4 +1,4 @@
-/* style.css - otoro.net-inspired research demo */
+/* Neural Biome article components. Page layout and type: /assets/stylesheets/article.css */
 
 :root {
   --bg: #ffffff;
@@ -9,22 +9,13 @@
   --link: #1d63b7;
   --accent: #1b9e77;
   --accent-soft: #e7f5ef;
-  --sans: "Helvetica Neue", Arial, sans-serif;
-  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Charter", Georgia, "Times New Roman", serif;
   --mono: "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
 }
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.55;
 }
 
 a {
@@ -34,87 +25,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-.page-shell {
-  width: min(1198px, calc(100% - 88px));
-  margin: 0 auto;
-  padding: 32px 0 72px;
-}
-
-.hero {
-  text-align: left;
-  margin-bottom: 34px;
-}
-
-h1,
-h2,
-p {
-  margin-top: 0;
-}
-
-h1 {
-  max-width: 1180px;
-  margin: 0 0 28px;
-  color: #333333;
-  font-family: var(--serif);
-  font-size: clamp(48px, 5.8vw, 76px);
-  font-weight: 400;
-  line-height: .96;
-  letter-spacing: 0;
-}
-
-.subtitle {
-  max-width: 920px;
-  margin: 0 0 20px;
-  color: #333333;
-  font-family: var(--serif);
-  font-size: 19px;
-  line-height: 1.62;
-}
-
-.paper-meta {
-  border-top: 1px solid var(--line);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  padding-top: 16px;
-  color: #8a8a8a;
-  font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.meta-item {
-  min-height: 44px;
-  padding: 0 18px;
-  border-left: 1px solid #e5e5e5;
-}
-
-.meta-item:first-child {
-  border-left: 0;
-  padding-left: 0;
-}
-
-.meta-label {
-  display: block;
-  color: #777777;
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-.meta-value {
-  display: block;
-  color: #9a9a9a;
-  font-size: 14px;
-}
-
-.paper-meta a {
-  color: #8a8a8a;
-}
-
-.paper-meta a:hover {
-  color: var(--ink);
 }
 
 .status-note {
@@ -264,8 +174,11 @@ h1 {
 }
 
 .interactive-demo {
-  width: min(960px, 100%);
+  width: 100%;
   margin: 24px 0 44px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
   padding: 16px;
   border: 1px solid var(--line);
   background: #ffffff;
@@ -389,7 +302,7 @@ h1 {
 
 .regime-card-expected {
   margin: 0 0 7px;
-  font-family: Georgia, serif;
+  font-family: var(--serif);
   font-size: 11px;
   color: var(--muted);
   line-height: 1.45;
@@ -431,7 +344,7 @@ h1 {
   color: var(--ink);
   font: inherit;
   font-size: 11px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   resize: vertical;
   box-sizing: border-box;
 }
@@ -469,13 +382,6 @@ h1 {
   }
 }
 
-article {
-  max-width: 960px;
-  margin: 0;
-  padding-bottom: 28px;
-  font-family: var(--serif);
-}
-
 article section {
   margin-bottom: 42px;
   padding: 0;
@@ -488,7 +394,7 @@ article section {
   border-left: 3px solid var(--line);
   background: #fafafa;
   color: #222222;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 14px;
 }
 
@@ -502,7 +408,7 @@ article section {
 .paper-figure figcaption {
   margin-bottom: 10px;
   color: var(--muted);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 12px;
 }
 
@@ -518,7 +424,7 @@ article section {
   padding: 10px 8px;
   border: 1px solid var(--line);
   background: #ffffff;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   text-align: center;
 }
 
@@ -542,7 +448,7 @@ article section {
 
 .flow-arrow {
   color: var(--muted);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 13px;
 }
 
@@ -556,14 +462,14 @@ article section {
   border-left: 3px solid var(--accent);
   background: #fafafa;
   color: #111111;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: 17px;
   line-height: 1.4;
 }
 
 .eq-number {
   color: var(--muted);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 12px;
 }
 
@@ -594,7 +500,7 @@ article section {
   width: 100%;
   height: auto;
   overflow: visible;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
 }
 
 .axis {
@@ -651,7 +557,7 @@ article section {
 
 .finding-kicker {
   color: var(--muted);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
@@ -660,7 +566,7 @@ article section {
 .finding-card h3 {
   margin: 5px 0 7px;
   color: var(--ink);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 13px;
   line-height: 1.3;
 }
@@ -676,7 +582,7 @@ article section {
   display: grid;
   border: 1px solid var(--line);
   background: #ffffff;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 11px;
 }
 
@@ -706,23 +612,6 @@ article section {
   font-weight: 600;
 }
 
-h2 {
-  margin: 0 0 18px;
-  color: #222222;
-  font-family: var(--serif);
-  font-size: 34px;
-  font-weight: 400;
-  line-height: 1.08;
-  text-transform: none;
-}
-
-article p {
-  color: #333333;
-  font-family: var(--serif);
-  font-size: 19px;
-  line-height: 1.62;
-  margin-bottom: 18px;
-}
 
 
 .regime-item {
@@ -736,7 +625,7 @@ article p {
   align-items: baseline;
   gap: 8px;
   margin-bottom: 5px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
 }
 
 .regime-item-name {
@@ -756,7 +645,7 @@ article p {
   border: 1px solid var(--line);
   background: #ffffff;
   color: var(--link);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 12px;
   cursor: pointer;
   text-decoration: none;
@@ -771,7 +660,7 @@ article p {
 }
 
 .param-tuple {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 11px;
   color: var(--muted);
   margin-bottom: 4px;
@@ -790,7 +679,7 @@ article p {
   display: grid;
   border: 1px solid var(--line);
   background: #ffffff;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 11px;
 }
 
@@ -837,7 +726,7 @@ article p {
   display: block;
   margin-bottom: 6px;
   color: var(--muted);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -857,55 +746,7 @@ article p {
   }
 }
 
-footer {
-  max-width: 960px;
-  margin: 0;
-  padding-top: 22px;
-  border-top: 1px solid var(--faint);
-  color: var(--muted);
-  font-size: 13px;
-  text-align: center;
-}
-
-footer p {
-  margin-bottom: 0;
-}
-
 @media (max-width: 640px) {
-  .page-shell {
-    width: min(100% - 28px, 960px);
-    padding-top: 22px;
-  }
-
-  h1 {
-    font-size: clamp(40px, 13vw, 58px);
-    line-height: 1;
-  }
-
-  h2 {
-    font-size: 30px;
-  }
-
-  article p {
-    font-size: 17px;
-  }
-
-  .paper-meta {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .meta-item {
-    min-height: 0;
-    padding: 0;
-    border-left: 0;
-  }
-
-  .subtitle br {
-    display: none;
-  }
-
   .interactive-demo {
     padding: 12px;
   }
@@ -914,4 +755,20 @@ footer p {
     width: min(320px, 86vw);
     height: min(320px, 86vw);
   }
+}
+
+/* Text runs in the shared reading column; demos and figures use the full width. */
+article section > :is(h2, h3, p, ol, ul, .regime-item, .equation-block, .references-list) {
+  max-width: var(--article-column);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+article section > p {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+article section > h2:first-child {
+  margin-top: 0;
 }

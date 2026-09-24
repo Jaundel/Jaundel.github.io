@@ -643,7 +643,19 @@ footer p {
     padding-top: 36px;
   }
 
-  .home-copy h1,
+  .home-copy h1 {
+    margin-bottom: 30px;
+  }
+
+  .home-copy p {
+    margin-bottom: 26px;
+  }
+
+  .home-copy p.emphasis {
+    margin-top: 0;
+    margin-bottom: 32px;
+  }
+
   .page-title {
     margin-bottom: 54px;
   }

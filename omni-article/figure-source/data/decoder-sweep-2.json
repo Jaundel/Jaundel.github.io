@@ -1,0 +1,366 @@
+{
+  "model": "data\\raw\\models\\omni-segmenter\\segmenter-dev-b.onnx",
+  "views": 240,
+  "rows": [
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.1,
+      "minimum_seed_pixels": 60,
+      "recall": 0.9385416666666667,
+      "precision": 0.9454354669464848,
+      "f1": 0.9419759539989545,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 151,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 158,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 153,
+          "truth": 160,
+          "predicted": 153
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 122,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 160
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.1,
+      "minimum_seed_pixels": 80,
+      "recall": 0.9322916666666666,
+      "precision": 0.9675675675675676,
+      "f1": 0.9496021220159151,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 151,
+          "truth": 160,
+          "predicted": 159
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 158,
+          "truth": 160,
+          "predicted": 159
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 153,
+          "truth": 160,
+          "predicted": 153
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 116,
+          "truth": 160,
+          "predicted": 134
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 160
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.1,
+      "minimum_seed_pixels": 120,
+      "recall": 0.7791666666666667,
+      "precision": 0.9816272965879265,
+      "f1": 0.8687572590011614,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 118,
+          "truth": 160,
+          "predicted": 121
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 155,
+          "truth": 160,
+          "predicted": 155
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 102,
+          "truth": 160,
+          "predicted": 113
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 90,
+          "truth": 160,
+          "predicted": 90
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 123,
+          "truth": 160,
+          "predicted": 123
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.2,
+      "minimum_seed_pixels": 60,
+      "recall": 0.9197916666666667,
+      "precision": 0.9433760683760684,
+      "f1": 0.9314345991561181,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 151,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 158,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 135,
+          "truth": 160,
+          "predicted": 135
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 122,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 161
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.2,
+      "minimum_seed_pixels": 80,
+      "recall": 0.9135416666666667,
+      "precision": 0.9658590308370044,
+      "f1": 0.9389721627408993,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 151,
+          "truth": 160,
+          "predicted": 159
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 158,
+          "truth": 160,
+          "predicted": 159
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 135,
+          "truth": 160,
+          "predicted": 135
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 116,
+          "truth": 160,
+          "predicted": 134
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 161
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.2,
+      "minimum_seed_pixels": 120,
+      "recall": 0.7677083333333333,
+      "precision": 0.9892617449664429,
+      "f1": 0.864516129032258,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 118,
+          "truth": 160,
+          "predicted": 121
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 156,
+          "truth": 160,
+          "predicted": 156
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 90,
+          "truth": 160,
+          "predicted": 95
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 90,
+          "truth": 160,
+          "predicted": 90
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 123,
+          "truth": 160,
+          "predicted": 123
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.3,
+      "minimum_seed_pixels": 60,
+      "recall": 0.9166666666666666,
+      "precision": 0.9411764705882353,
+      "f1": 0.9287598944591029,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 151,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 156,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 134,
+          "truth": 160,
+          "predicted": 134
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 122,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 161
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.3,
+      "minimum_seed_pixels": 80,
+      "recall": 0.9114583333333334,
+      "precision": 0.9647188533627343,
+      "f1": 0.9373326191751473,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 151,
+          "truth": 160,
+          "predicted": 159
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 159
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 134,
+          "truth": 160,
+          "predicted": 134
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 116,
+          "truth": 160,
+          "predicted": 134
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 157,
+          "truth": 160,
+          "predicted": 161
+        }
+      }
+    },
+    {
+      "object_threshold": 0.5,
+      "boundary_threshold": 0.3,
+      "minimum_seed_pixels": 120,
+      "recall": 0.7614583333333333,
+      "precision": 0.9825268817204301,
+      "f1": 0.857981220657277,
+      "per_cache": {
+        "hocap__subject_3__20231024_161937__043422252387": {
+          "tp": 118,
+          "truth": 160,
+          "predicted": 121
+        },
+        "hocap__subject_3__20231024_161937__105322251564": {
+          "tp": 160,
+          "truth": 160,
+          "predicted": 160
+        },
+        "hocap__subject_7__20231022_193630__043422252387": {
+          "tp": 156,
+          "truth": 160,
+          "predicted": 156
+        },
+        "hocap__subject_7__20231022_193630__105322251564": {
+          "tp": 84,
+          "truth": 160,
+          "predicted": 94
+        },
+        "hocap__subject_9__20231027_125315__043422252387": {
+          "tp": 90,
+          "truth": 160,
+          "predicted": 90
+        },
+        "hocap__subject_9__20231027_125315__105322251564": {
+          "tp": 123,
+          "truth": 160,
+          "predicted": 123
+        }
+      }
+    }
+  ]
+}

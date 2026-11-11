@@ -16,7 +16,7 @@
         <nav class="nav-links" aria-label="Primary navigation">
             <a href="index.html">Home</a>
             <a class="active" href="projects.html">Projects</a>
-            <a href="assets/Jaundel_Simon_Resume.pdf?v=20261110-resume">Resume</a>
+            <a href="assets/Jaundel_Simon_Resume.pdf?v=20261110-omni-link">Resume</a>
             <a href="about.html">About</a>
         </nav>
         <nav class="social-links" aria-label="Social links">
@@ -28,6 +28,20 @@
 
     <main class="works-shell selected-works">
         <h1>Selected Works</h1>
+
+        <article class="work-row">
+            <a class="work-media" href="omni-article/" aria-label="Open Omni article" style="width: 360px; height: 360px; aspect-ratio: 1 / 1; display: block; overflow: hidden;">
+                <img src="assets/figures/omni-thumbnail.gif" alt="A trained segmenter outlining each object on a table in its own colour as a hand places and moves them" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                <span>Omni</span>
+            </a>
+            <div class="work-copy">
+                <h2><a href="omni-article/">Omni: Giving physical space a memory</a></h2>
+                <p class="authors">Jaundel Simon</p>
+                <p class="venue">Engineering capstone (2026)</p>
+                <p>A live digital twin of a table, built from two iPhones. Omni trains a small RGB-D segmentation network on HO-Cap and OCID, validates it on recordings it never saw, and keeps a record that holds on to hidden objects until a camera sees their place empty.</p>
+                <p class="work-links"><a href="omni-article/">Article</a> | <a href="omni-article/#results">Results</a> | <a href="omni-article/figure-source/README.txt">Figure data</a></p>
+            </div>
+        </article>
 
         <article class="work-row">
             <a class="work-media" href="morphic/article.html" aria-label="Open Morphic article" style="width: min(360px, 100%); height: auto; aspect-ratio: 1 / 1; display: block; overflow: hidden;">

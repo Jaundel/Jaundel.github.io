@@ -1,0 +1,69 @@
+/* Omni article: figure, grid, chart and table layout only.
+   Type, colour, title band and reading column come from /assets/stylesheets/article.css. */
+
+*{box-sizing:border-box}
+.layout > *{max-width:var(--article-column);margin-left:auto !important;margin-right:auto !important}
+.layout > .wide{max-width:var(--article-wide)}
+.layout > .mid{max-width:860px}
+.layout p{margin-top:0;margin-bottom:22px}
+.layout ul{margin-top:0;margin-bottom:22px;padding-left:1.2em}
+.layout li{margin:0 0 10px}
+.lead{font-size:19px;line-height:1.7;color:var(--article-ink)}
+.lead-in{font-weight:bold}
+
+.article-cover video{display:block;width:100%;height:auto;border-radius:6px;background:#f4f4f2}
+
+figure{margin:40px auto 52px}
+figure img,figure video{display:block;width:100%;height:auto}
+.fig-media{border-radius:6px;overflow:hidden;background:#f4f4f2}
+figcaption{max-width:var(--article-column);margin:14px auto 0}
+figcaption .src{display:block;margin-top:6px;color:#8b9198;font-size:12.5px}
+
+/* Image grids: column headings and row labels are page text */
+.grid{display:grid;grid-template-columns:140px repeat(var(--cols),minmax(0,1fr));gap:6px;align-items:center;font:400 12.5px/1.4 var(--article-sans);color:var(--article-muted)}
+.grid .colhead{align-self:end;padding-bottom:4px;font-weight:500;color:var(--article-ink)}
+.grid .rowhead{padding-right:8px}
+.grid .rowhead b{display:block;font-weight:500;color:var(--article-ink)}
+.grid img{width:100%;height:auto;aspect-ratio:4 / 3;object-fit:cover;border-radius:4px;background:#f4f4f2}
+
+/* Charts: SVG text set in the article's sans */
+.chart{width:100%;height:auto;overflow:visible}
+.chart .t{font-family:var(--article-sans);fill:var(--article-ink)}
+.chart .tick{font-size:11.5px;fill:var(--article-muted);font-variant-numeric:tabular-nums}
+.chart .axis{font-size:12px;fill:var(--article-muted)}
+.chart .key{font-size:12px}
+.chart .head{font-size:12.5px;font-weight:500}
+.chart .panel{font-size:15px;font-weight:600}
+.chart .muted{fill:var(--article-muted)}
+
+/* Tables */
+.table{margin:32px auto 44px;overflow-x:auto;font:400 14px/1.5 var(--article-sans)}
+.table table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.table caption{caption-side:top;text-align:left;padding:0 0 12px;color:var(--article-muted)}
+.table caption b{color:var(--article-ink);font-weight:500}
+.table th,.table td{padding:10px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid #e8ebef}
+.table th{font-weight:500;color:var(--article-ink);border-bottom:1px solid #b9c4ce}
+.table th:first-child,.table td:first-child{text-align:left;padding-left:0}
+.table .best{font-weight:500;color:var(--article-ink)}
+.table.wrap td,.table.wrap th{white-space:normal;vertical-align:top}
+.table.wrap td:nth-child(2),.table.wrap th:nth-child(2){text-align:left}
+.table.wrap td:first-child{width:52%}
+.table-note{margin:12px 0 0;color:var(--article-muted);font:400 13px/1.6 var(--article-sans);white-space:normal}
+
+.refs{padding-left:1.4em;font:400 14px/1.65 var(--article-sans)}
+.refs li{margin:0 0 10px}
+.refs i{font-style:normal}
+
+@media (max-width:700px){
+  .grid{grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:3px}
+  .grid .corner{display:none}
+  .grid .colhead{font-size:11px}
+  .grid .rowhead{grid-column:1 / -1;padding:10px 0 2px}
+  .grid .rowhead b{display:inline;margin-right:6px}
+  .chart-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .chart-wrap .chart{min-width:600px}
+  .table{font-size:12.5px}
+  .table th,.table td{padding:8px 6px}
+  .lead{font-size:17px}
+}
+.chart-img{display:block;width:100%;height:auto}

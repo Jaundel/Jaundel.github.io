@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Omni — Giving physical space a memory</title>
+  <meta name="description" content="Omni keeps a record of the objects on a table from two iPhones, using an RGB-D segmentation network trained for it on HO-Cap and OCID, and keeps objects it cannot see until a camera shows their place empty." />
+  <meta property="og:title" content="Giving physical space a memory" />
+  <meta property="og:image" content="https://jaundel.github.io/omni-article/media/scene/fused-orbit-poster.jpg" />
+  <link rel="icon" href="/assets/figures/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" />
+  <link rel="stylesheet" href="/assets/fontawesome-free-7.2.0-web/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/stylesheets/site-nav.css?v=20260924" />
+  <link rel="stylesheet" href="./omni.css" />
+  <link rel="stylesheet" href="/assets/stylesheets/article.css?v=20260924" />
+</head>
+<body class="article-page" style="--article-tint: #e6ecef; --article-tint-2: #f7f9fa; --nav-dot: #1f5fa8;">
+  <div class="article-top">
+    <header class="site-shell site-nav">
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a class="active" href="/projects.html">Projects</a>
+        <a href="/assets/Jaundel_Simon_Resume.pdf?v=20261110-omni-link">Resume</a>
+        <a href="/about.html">About</a>
+      </nav>
+      <nav class="social-links" aria-label="Social links">
+        <a href="https://www.instagram.com/tsampurado/?hl=en" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://github.com/Jaundel" aria-label="GitHub"><i class="fa-brands fa-github-alt"></i></a>
+        <a href="https://www.linkedin.com/in/jaundelsimon/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      </nav>
+    </header>
+    <header class="site-shell article-hero">
+      <div class="article-intro">
+        <h1 class="article-title">Giving physical space a memory</h1>
+        <p class="article-byline">Jaundel Simon</p>
+        <p class="article-abstract">Omni watches a table through two iPhones, keeps a record of every object on it, and keeps an object it can no longer see until a camera shows that its place is empty. Its perception is a small RGB-D network trained for it on public datasets, validated on recordings it never saw, and run live on a laptop CPU.</p>
+        <p class="article-links">
+          <a class="article-button" href="#results">Results <i class="fa-solid fa-chart-line" aria-hidden="true"></i></a>
+          <a class="article-button" href="./figure-source/README.txt">Figure data <i class="fa-solid fa-flask" aria-hidden="true"></i></a>
+        </p>
+        <p class="article-venue">Omni &middot; Engineering capstone &middot; 2026</p>
+      </div>
+      <figure class="article-cover">
+        <img src="../assets/figures/omni-thumbnail.gif" alt="The released segmenter outlining each object on a held-out HO-Cap recording as a hand moves them" />
+      </figure>
+    </header>
+  </div>
+
+<main class="shell site-shell article-body layout">
+
+    <figure class="wide teaser">
+      <div class="fig-media">
+        <video src="./media/scene/fused-orbit.webm" poster="./media/scene/fused-orbit-poster.jpg" autoplay muted loop playsinline controls aria-label="A table with headphones, a charger, a candle, a bottle and a plant, reconstructed in 3D from two phones' depth"></video>
+      </div>
+      <figcaption><b>Figure 1. One moment of a recorded session, rebuilt in 3D from both phones.</b> Every point is a LiDAR depth measurement from one of the two iPhones, placed in the shared table frame by that phone's calibration and coloured from its own camera: headphones, a phone charger, a candle, a bottle and a plant, with the walls of the nook behind them. The two phones face the table from opposite sides; the moving viewpoint is a virtual camera.<span class="src">Recorded session of 23 October 2026 (runs/omni-demo-live), update 300; 67,157 points; figure-source/phone_scene.py.</span></figcaption>
+    </figure>
+
+    <p class="lead">An object detector answers what is visible in one frame. A record of a table has to answer what is on the table, where, and since when, including while a hand or another object blocks the view. Omni builds that record from two fixed iPhones streaming colour and LiDAR depth. Its perception is a 0.61-million-parameter RGB-D network, trained on HO-Cap and OCID, that labels objects, hands and the contacts between touching objects, and runs on a laptop CPU. On thirteen HO-Cap recordings it had never seen, each scored once under rules fixed in advance, it tracked more objects than the depth-only detector it replaced on twelve, and in the last validation round it passed all 30 gates on five recordings. Trained alongside OCID, it nearly doubled its accuracy on objects it had never seen. The scene record it feeds keeps an object until a camera sees its place empty, and marks a remembered position as remembered.</p>
+
+    <h2 id="overview">What Omni does</h2>
+    <p>Two iPhones with rear LiDAR stand on either side of a table, fixed in place, and stream colour and depth over USB to a laptop through Record3D. Each phone is calibrated to a shared table frame (Figure 1). Several times a second the laptop segments each phone's frame, matches the objects the two phones see, updates a record of the table, and draws everything in the Rerun viewer: each camera with its tracked objects, the record in 3D and from above, and a log of changes. The record can be asked where an object is and what has changed since a given time.</p>
+
+    <figure class="mid">
+      <div class="fig-media">
+        <img src="./media/scene/phone2-perception.jpg" alt="A phone's view of a white table with a bottle, candle, plant, charger and headphones, each outlined in its own colour" />
+      </div>
+      <figcaption><b>Figure 2. What Omni's perception accepts in one phone frame.</b> The released segmenter and the admission rules of the live single-camera perception, run on a frame from phone 2 of the 23 October session. Each accepted object region has its own colour, and the charger's cable is found as a region of its own. This session was recorded before the segmenter existed, so the network had never seen this table, these objects or this phone.<span class="src">tools/phone_demo.py's live perception with configs/tabletop-phone-learned.json, 75.7&nbsp;s into the session; figure-source/phone_segmentation.py.</span></figcaption>
+    </figure>
+
+    <p>The problem is narrower than general scene memory. Khronos [1] and Hydra [2] build metric-semantic models of whole buildings that change over time, and ConceptGraphs [3] attaches open-vocabulary descriptions to the objects it maps. Omni keeps one small scene and asks of each object whether the evidence still supports it. The answer depends on perception more than on anything else: an object that is never segmented is never recorded. Most of the work on Omni went into perception, and most of this article is about it.</p>
+
+    <h2 id="perception">Why train a segmenter</h2>
+    <p>The first perception was geometric. With the table plane known, every connected region of depth standing above it became an object. It needs no training and works for upright objects on a bare table, but three common cases defeat it: objects whose tops are within about 2.5&nbsp;cm of the table (a flat box, a spatula), objects that touch from a camera's viewpoint and merge into one region, and an object gripped from above, which merges with the hand. A separate hand detector also took 125 of the 135&nbsp;ms of perception per phone frame.</p>
+    <p>Pretrained open-vocabulary models were tried first. YOLOE, prompted with object descriptions and run on the laptop CPU, matched 97 of 420 annotated objects on HO-Cap evaluation frames, and Grounding DINO Tiny did not fit in the laptop's memory budget. The alternative was a small network trained for exactly this scene: a fixed camera looking down at a table, with depth.</p>
+
+    <h2 id="data">Training data</h2>
+    <p>Two public datasets supply labelled RGB-D frames of objects on tables. <span class="lead-in">HO-Cap</span> [4] records people handling objects on one table, seen by a calibrated multi-camera rig, with per-pixel object and hand labels. Thirteen recordings already used for development or spent in earlier validation rounds were used for training, from the two cameras Omni replays: 3,120 labelled views. The recording replayed in Omni's demo is refused by the data-cache builder, so the network never trains on the scene it is shown on. <span class="lead-in">OCID</span> [5] has 2,390 labelled frames of up to 20 objects, touching and stacked, on wood, striped and patterned tables and on plastic, wood and carpet floors. Its ARID10 and ARID20 sequences were used for training; YCB10, with different objects, was held out.</p>
+    <p>Each pixel gives the network five numbers: red, green, blue, the height of that point above the table plane (clipped to −5 to 30&nbsp;cm), and whether the depth there is valid. Height rather than raw depth makes the input independent of where the camera stands. HO-Cap heights come from the published calibration. OCID has no table calibration, so its heights come from the dominant plane found in each frame, as Omni finds it for a phone with no calibration tag. Training crops are rescaled by 0.75 to 2.2, flipped and colour-jittered; the bare table alone is recoloured so the network sees other tables; and depth is smoothed, noised, tilted and holed to resemble a phone's LiDAR.</p>
+
+    <figure class="mid">
+      <div class="grid" style="--cols:4">
+        <!-- grid:inputs -->
+        <div class="corner"></div><div class="colhead">Colour</div><div class="colhead">Height above table</div><div class="colhead">Label</div><div class="colhead">Contact target</div>
+        <div class="rowhead"><b>HO-Cap</b>camera 105<br><span class="note">frame 92, 4 objects</span></div><img src="./media/seg/in-0-rgb.jpg" alt="HO-Cap colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/in-0-height.jpg" alt="Height above the table" loading="lazy" width="640" height="480" /><img src="./media/seg/in-0-label.jpg" alt="Object and hand labels" loading="lazy" width="640" height="480" /><img src="./media/seg/in-0-contact.jpg" alt="Contact target" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>HO-Cap</b>camera 043<br><span class="note">frame 75, 4 objects</span></div><img src="./media/seg/in-1-rgb.jpg" alt="HO-Cap colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/in-1-height.jpg" alt="Height above the table" loading="lazy" width="640" height="480" /><img src="./media/seg/in-1-label.jpg" alt="Object and hand labels" loading="lazy" width="640" height="480" /><img src="./media/seg/in-1-contact.jpg" alt="Contact target" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>OCID ARID20</b>table / top / seq08<br><span class="note">frame 17, 17 objects</span></div><img src="./media/seg/in-2-rgb.jpg" alt="OCID ARID20 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/in-2-height.jpg" alt="Height above the table" loading="lazy" width="640" height="480" /><img src="./media/seg/in-2-label.jpg" alt="Object and hand labels" loading="lazy" width="640" height="480" /><img src="./media/seg/in-2-contact.jpg" alt="Contact target" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>OCID ARID10</b>floor / top / mixed / seq01<br><span class="note">frame 1, 2 objects</span></div><img src="./media/seg/in-3-rgb.jpg" alt="OCID ARID10 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/in-3-height.jpg" alt="Height above the table" loading="lazy" width="640" height="480" /><img src="./media/seg/in-3-label.jpg" alt="Object and hand labels" loading="lazy" width="640" height="480" /><img src="./media/seg/in-3-contact.jpg" alt="Contact target" loading="lazy" width="640" height="480" />
+        <!-- /grid:inputs -->
+      </div>
+      <figcaption><b>Figure 3. What the network is given and what it is asked to predict.</b> From left: the colour image; height above the table (dark blue at the table, yellow at 30&nbsp;cm, near-black where depth is missing); the label, one colour per object with hands in white; and the contact target, the object pixels within two pixels of a different object. Contacts are the only boundaries the network is trained to find; an object's edge against the table or a hand is left to the class output. One frame drawn at random from each listed sequence, cropped to the objects.<span class="src">Training caches built by tools/segmenter_data.py; HO-Cap and OCID, CC BY 4.0.</span></figcaption>
+    </figure>
+
+    <h2 id="training">Training the network</h2>
+    <p>The network is a MobileNetV2 encoder [6] initialised from ImageNet weights, with its first convolution widened from three input channels to five, and a four-level feature-pyramid decoder [7] back to full resolution: 0.61 million parameters. It has two outputs per pixel: a class (background, object or hand) and the probability that the pixel lies on a contact between two objects. The loss sums cross-entropy on the class, with objects weighted twice; binary cross-entropy on the contact output, with contact pixels weighted eight times and object pixels emphasised; and half a Dice loss on the object class. Training uses AdamW at a learning rate of 2×10<sup>−3</sup> with a 200-step warm-up and cosine decay, in batches of twelve 192×256 crops, for 3,000 to 4,000 steps. On the laptop CPU a run takes 25 to 42 minutes. The trained weights are exported to ONNX and run through OpenCV's DNN module, so the product carries no deep-learning runtime, and the file's SHA-256 is pinned in the configuration.</p>
+    <p>The choice of boundary target mattered most. A first run marked every object edge as boundary; thin objects were then boundary across their whole width, and held-out recall peaked early and fell as the network learned that target. Marking only the contacts between two objects let recall on the same held-out views rise steadily (Figure 4), and every later model uses the contact target.</p>
+
+    <figure class="mid">
+      <img class="chart-img" src="./media/charts/training.svg" alt="Two panels: run B loss terms over 3,000 steps, and held-out recall and precision of runs A and B" />
+      <figcaption><b>Figure 4. Two boundary targets on the same data.</b> (a) The three loss terms of run B over 3,000 steps, log scale. (b) Instance recall (filled) and precision (open) on three HO-Cap recordings held out of training, both cameras, pooled; an instance counts if it overlaps a labelled object at IoU 0.5 or more. Run A, trained to find every object edge, was scored at 500 and 1,000 steps.<span class="src">Training logs runs/segmenter/dev-a.log and dev-b/log.json; plotted by figure-source/plot_charts.py.</span></figcaption>
+    </figure>
+
+    <p>The network's outputs become objects in a fixed decoding step. Pixels with object probability of at least 0.5 are object pixels. Those whose contact probability is below a threshold form seed regions; seeds smaller than a minimum are dropped; each seed then grows back over its own object pixels, so touching objects divide along the predicted contact. Object regions no seed reaches, such as a thin handle, become instances of their own. The three settings were swept on the held-out development views and chosen before any untouched recording was scored (Figure 5).</p>
+
+    <figure class="mid">
+      <img class="chart-img" src="./media/charts/sweep.svg" alt="Precision against recall for each decoder setting, coloured by seed size, with the chosen setting circled" />
+      <figcaption><b>Figure 5. The decoder's three settings, swept on 240 held-out views.</b> Each point is one combination of object threshold (0.4 to 0.6), contact threshold (0.1 to 0.7) and smallest seed region (20 to 120 pixels), applied to run B's outputs.<span class="src">tools/sweep_segmenter_decode.py; runs/segmenter/dev-b/sweep.json and sweep2.json; plotted by figure-source/plot_charts.py.</span></figcaption>
+    </figure>
+
+    <p>The segmenter also made perception faster. For two 640×480 views the median time fell from about 135&nbsp;ms, with depth components and the hand detector, to about 66&nbsp;ms. Through the live path with one phone-shaped camera, the per-frame work fell from 108 to 31&nbsp;ms at the median, enough for 10 updates a second with no frame dropped.</p>
+
+    <h2 id="results">Recordings it never saw</h2>
+    <p>Each candidate model was validated in a round with fixed rules. The configuration was frozen and written down with the pass criteria before the recordings were chosen; recordings came from HO-Cap subjects and object groups the network had not trained on; each recording was scored once; and afterwards it joined the development set and was never used for validation again. Each recording has six gates on its tracked output: object recall, precision, track coverage, identity switches, and the median and 95th-percentile error of an object's location at rest against the dataset's labelled poses.</p>
+
+    <figure class="mid">
+      <div class="grid" style="--cols:3">
+        <!-- grid:heldout -->
+        <div class="corner"></div><div class="colhead">Colour</div><div class="colhead">Label</div><div class="colhead">Released model</div>
+        <div class="rowhead"><b>V14</b>camera 043, frame 72<br><span class="note">4 of 4 objects matched</span></div><img src="./media/seg/held-0-rgb.jpg" alt="V14 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/held-0-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/held-0-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>V16</b>camera 105, frame 61<br><span class="note">4 of 4 objects matched</span></div><img src="./media/seg/held-1-rgb.jpg" alt="V16 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/held-1-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/held-1-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>V22</b>camera 105, frame 36<br><span class="note">4 of 4 objects matched</span></div><img src="./media/seg/held-2-rgb.jpg" alt="V22 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/held-2-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/held-2-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>V23</b>camera 105, frame 39<br><span class="note">4 of 4 objects matched</span></div><img src="./media/seg/held-3-rgb.jpg" alt="V23 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/held-3-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/held-3-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>V21</b>camera 105, frame 22<br><span class="note">4 of 4 objects matched</span></div><img src="./media/seg/held-4-rgb.jpg" alt="V21 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/held-4-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/held-4-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>V18</b>camera 105, frame 52<br><span class="note">4 of 4 objects matched</span></div><img src="./media/seg/held-5-rgb.jpg" alt="V18 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/held-5-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/held-5-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" />
+        <!-- /grid:heldout -->
+      </div>
+      <figcaption><b>Figure 6. The released model on six recordings it never trained on.</b> One view drawn at random from each of six recordings that passed every gate in their validation round, with the camera drawn at random too. A predicted object takes the colour of the labelled object it overlaps at IoU 0.5 or more; predicted hands are white.<span class="src">assets/models/omni-segmenter-v1.onnx at 640×480, object 0.5, contact 0.1, seed 240 px; figure-source/segmenter_panels.py.</span></figcaption>
+    </figure>
+
+    <figure class="wide">
+      <div class="fig-media">
+        <video src="./media/seg/heldout-v22.webm" poster="./media/seg/heldout-v22-poster.jpg" autoplay muted loop playsinline controls aria-label="Segmentation of every frame of a held-out HO-Cap recording from two cameras"></video>
+      </div>
+      <figcaption><b>Figure 7. Every frame of recording V22 from both cameras, segmented by the released model.</b> V22 was an untouched recording in validation round 8 and has never been trained on. Colours follow the labelled object each prediction matches, frame by frame; the hand is white. 120 frames played at half speed, each camera cropped to the table.<span class="src">Model outputs on the HO-Cap frames, decoded as in Figure 6; figure-source/segmenter_panels.py.</span></figcaption>
+    </figure>
+
+    <p>Three rounds tested the segmenter against the depth-component detector, thirteen recordings in all. The learned perception had higher recall than the depth detector on twelve of them, and each round's candidate passed more gates than the one before (Figure 8). The round-8 candidate passed all 30 gates on its five recordings, at 640×480 and at the phone's resolution.</p>
+
+    <figure class="mid">
+      <img class="chart-img" src="./media/charts/gates.svg" alt="Share of gates passed in rounds 6 to 8 for the learned segmenter and the depth-component reference" />
+      <figcaption><b>Figure 8. Gates passed in three validation rounds.</b> Each round's frozen learned candidate against the same depth-component reference on that round's untouched HO-Cap recordings, two cameras at 640×480. Six gates per recording.<span class="src">docs/segmentation-20261030.md and runs/round8/summary.txt; data in figure-source/data/gates-by-round.csv; plotted by figure-source/plot_charts.py.</span></figcaption>
+    </figure>
+
+    <div class="table">
+      <table>
+        <caption><b>Round 8, five untouched recordings, scored once.</b> Two cameras at 640×480.</caption>
+        <thead><tr><th>Recording</th><th>Recall</th><th>Precision</th><th>Track coverage</th><th>Location at rest, median / p95</th></tr></thead>
+        <tbody>
+          <tr><td>V19</td><td>100%</td><td>100%</td><td>98.2%</td><td>5.5 / 15.3 mm</td></tr>
+          <tr><td>V20</td><td>98.5%</td><td>99.9%</td><td>98.2%</td><td>3.9 / 6.6 mm</td></tr>
+          <tr><td>V21</td><td>97.7%</td><td>99.3%</td><td>98.2%</td><td>6.0 / 8.5 mm</td></tr>
+          <tr><td>V22</td><td>100%</td><td>100%</td><td>98.3%</td><td>3.7 / 26.6 mm</td></tr>
+          <tr><td>V23</td><td>87.0%</td><td>94.0%</td><td>85.3%</td><td>3.4 / 7.9 mm</td></tr>
+        </tbody>
+      </table>
+      <p class="table-note">No identity switches, false removals or false events on any of the five, every occluded object kept its track, and every object was named correctly through the registry.</p>
+    </div>
+
+    <h2 id="transfer">A different dataset</h2>
+    <p>HO-Cap has one beige table, four objects per scene and one camera rig. Trained on it alone, the network reached an overlap F-measure of 42.0 on OCID's YCB10 sequences. Adding OCID's ARID scenes to training, with YCB10's objects still unseen, raised it to 78.3 (Figure 9). The measures follow the unseen-object segmentation literature and are reimplemented in <code>tools/uois_metrics.py</code>. For scale, published methods trained on about 280,000 synthetic scenes and run on a GPU reach 86 to 89 on all of OCID without having seen it [8]; the numbers here are on a held-out subset after seeing OCID's tables, from a 0.61-million-parameter model on a CPU. The released model is the one trained on both datasets.</p>
+
+    <figure class="mid">
+      <div class="grid" style="--cols:4">
+        <!-- grid:ocid -->
+        <div class="corner"></div><div class="colhead">Colour</div><div class="colhead">Label</div><div class="colhead">HO-Cap only</div><div class="colhead">HO-Cap and OCID</div>
+        <div class="rowhead"><b>table, mixed</b>top view, seq32, frame 1<br><span class="note">1 objects · F 0.00 → 0.97</span></div><img src="./media/seg/ocid-0-rgb.jpg" alt="OCID YCB10 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-0-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-0-hocap.jpg" alt="HO-Cap-only model" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-0-mixed.jpg" alt="HO-Cap and OCID model" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>table, curved</b>top view, seq36, frame 1<br><span class="note">1 objects · F 0.26 → 0.96</span></div><img src="./media/seg/ocid-1-rgb.jpg" alt="OCID YCB10 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-1-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-1-hocap.jpg" alt="HO-Cap-only model" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-1-mixed.jpg" alt="HO-Cap and OCID model" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>floor, curved</b>bottom view, seq05, frame 3<br><span class="note">4 objects · F 0.28 → 0.82</span></div><img src="./media/seg/ocid-2-rgb.jpg" alt="OCID YCB10 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-2-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-2-hocap.jpg" alt="HO-Cap-only model" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-2-mixed.jpg" alt="HO-Cap and OCID model" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>floor, curved</b>top view, seq12, frame 7<br><span class="note">8 objects · F 0.35 → 0.77</span></div><img src="./media/seg/ocid-3-rgb.jpg" alt="OCID YCB10 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-3-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-3-hocap.jpg" alt="HO-Cap-only model" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-3-mixed.jpg" alt="HO-Cap and OCID model" loading="lazy" width="640" height="480" />
+        <div class="rowhead"><b>table, cuboid</b>top view, seq34, frame 3<br><span class="note">3 objects · F 0.56 → 0.97</span></div><img src="./media/seg/ocid-4-rgb.jpg" alt="OCID YCB10 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-4-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-4-hocap.jpg" alt="HO-Cap-only model" loading="lazy" width="640" height="480" /><img src="./media/seg/ocid-4-mixed.jpg" alt="HO-Cap and OCID model" loading="lazy" width="640" height="480" />
+        <!-- /grid:ocid -->
+      </div>
+      <figcaption><b>Figure 9. Objects never trained on, before and after adding OCID to training.</b> Five OCID YCB10 frames drawn at random. Third column: the network trained on HO-Cap alone. Fourth: the same network trained on HO-Cap and OCID ARID10 and ARID20, the released model. Matched predictions take their object's colour; grey predictions matched no object at IoU 0.5. Under each row label is that frame's overlap F-measure for the two models.<span class="src">Both models at 320×240, object 0.5, contact 0.1, seed 60 px, scored at OCID's native labels; figure-source/segmenter_panels.py.</span></figcaption>
+    </figure>
+
+    <div class="table">
+      <table>
+        <caption><b>OCID YCB10, 504 frames of objects never trained on.</b> Mean per-frame measures.</caption>
+        <thead><tr><th>Training data</th><th>Overlap P / R / F</th><th>Boundary P / R / F</th><th>Objects with F ≥ 0.75</th></tr></thead>
+        <tbody>
+          <tr><td>HO-Cap only</td><td>48.6 / 41.6 / 42.0</td><td>26.8 / 28.7 / 25.3</td><td>23.6%</td></tr>
+          <tr><td>HO-Cap and OCID ARID</td><td class="best">78.2 / 78.4 / 78.3</td><td class="best">71.4 / 70.2 / 70.6</td><td class="best">66.9%</td></tr>
+        </tbody>
+      </table>
+      <p class="table-note">The rule for choosing between the two was written before either final model was trained: the mixed model is the candidate unless its YCB10 overlap F falls below the HO-Cap-only model's.</p>
+    </div>
+
+    <h2 id="rounds">Improving between rounds</h2>
+    <p>After each round its recordings became development data, and the next candidate was built on them. Three changes carried the round-8 candidate past its predecessors.</p>
+
+    <div class="table wrap">
+      <table>
+        <caption><b>Changes adopted on development recordings before round 8.</b></caption>
+        <thead><tr><th>Change</th><th>Measured effect</th></tr></thead>
+        <tbody>
+          <tr><td>Run the network at the camera's 640×480 instead of 320×240</td><td>V11 recall 65.2 → 97.7%, touching boxes separated</td></tr>
+          <tr><td>Reject an instance only for over-height pixels of its own, not the hand beside it</td><td>V13 recall 77.6 → 89.8%</td></tr>
+          <tr><td>Locate an object by the mean of its visible surface points</td><td>Location median 9.1 → 6.4 mm, mean over eight recordings</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A second line of work trained a per-pixel instance embedding, the approach UCN [10] uses for RGB-D unseen-object segmentation: eight extra output channels trained with a discriminative loss [9], which pulls the pixels of one object together and pushes different objects apart. The embedding learned the distinction it was meant to: the mean embeddings of two touching objects lay 2.4 to 4.0 apart, against 0.9 for two parts of the same object (Figure 10). Trained jointly with the other outputs it cost some segmentation accuracy, so the released model keeps the contact output, and the embedding is the starting point for the next instance head.</p>
+
+    <figure class="mid">
+      <div class="grid" style="--cols:4">
+        <!-- grid:embedding -->
+        <div class="corner"></div><div class="colhead">Colour</div><div class="colhead">Label</div><div class="colhead">Released model</div><div class="colhead">Embedding, 3 components</div>
+        <div class="rowhead"><b>V11</b>camera 105, frame 60<br><span class="note">released model: 4 of 4 matched, 4 instances</span></div><img src="./media/seg/emb-0-rgb.jpg" alt="V11 colour frame" loading="lazy" width="640" height="480" /><img src="./media/seg/emb-0-truth.jpg" alt="Published label" loading="lazy" width="640" height="480" /><img src="./media/seg/emb-0-pred.jpg" alt="Released model&#x27;s instances" loading="lazy" width="640" height="480" /><img src="./media/seg/emb-0-embedding.jpg" alt="Embedding projected to colour" loading="lazy" width="640" height="480" />
+        <!-- /grid:embedding -->
+      </div>
+      <figcaption><b>Figure 10. A learned instance embedding on two touching boxes.</b> Third column: the released model's instances. Fourth: the embedding model's 8-channel output at its object pixels, projected onto the first three principal components and shown as red, green and blue, so that similar colours are nearby embeddings. The two boxes that touch at a corner take clearly different colours.<span class="src">runs/segmenter/v3-embed at 320×240 and the released model at 640×480, HO-Cap V11 frame 60, camera 105; figure-source/segmenter_panels.py.</span></figcaption>
+    </figure>
+
+    <h2 id="memory">The scene record</h2>
+    <p>Each phone's instances become observations if their depth places them on the table, within the work area and below a height limit. Observations are matched across the two phones, then over time. A group across phones may hold at most one observation from each phone, and a group whose members disagree is withheld rather than forced. Over time, an observation either continues a track or starts one; when two tracks are nearly equally good matches, neither receives it, so identities are not swapped.</p>
+    <p>For each track the record keeps its position, when it was last observed, whether it is present, and whether that presence is current or retained. Three rules decide what changes.</p>
+    <ul>
+      <li><span class="lead-in">Seen.</span> A matched observation updates the position and marks it current. A view covering less than 80% of the object's earlier surface, within 6&nbsp;cm of it, is treated as partial and holds the earlier position for up to 10 seconds.</li>
+      <li><span class="lead-in">Not seen.</span> A missed observation changes only the age of the evidence. The object is still present; its position is now retained.</li>
+      <li><span class="lead-in">Seen empty.</span> Removal requires the last footprint to be projected into a healthy camera and found to be bare table: at least 90% of its samples with reliable depth and at most 2% above the table, repeated over several updates. An occupied view, or a disconnected camera, is no evidence of absence. The segmenter's object and hand pixels are excluded from the bare table, so a flat object still counts as occupying it.</li>
+    </ul>
+    <p>The rules were tested on recorded data, so that the same perception output could be replayed through each policy, on HO-Cap recordings V11 to V23 with camera outages injected. When a static object was hidden, the record kept it in 65 of 65 episodes, and all 1,976 answers given from its retained position were correct. A timeout policy keeps a hidden object only if its limit outlasts the occlusion. Requiring evidence of absence before removing an object also reduced wrong answers on V11 to V18 from 5.35% to 2.93%.</p>
+
+    <h2 id="phones">On two iPhones</h2>
+    <p>Each phone is calibrated without a printed tag. The table plane is fitted to its LiDAR depth over 30 frames and levelled with gravity: in the 23 October session, with residuals of 2.8&nbsp;mm for phone 1 and 2.5&nbsp;mm for phone 2. The second phone is then placed in the first phone's table frame by matching five objects both phones see. Figure 1 is that calibration at work: two independent depth images, from opposite sides, landing on one table. The released segmenter runs on each phone's full-resolution colour image at 640×480, about 107&nbsp;ms per phone update.</p>
+    <p>The full system ran unattended for long periods on two phones without a reconnect.</p>
+
+    <div class="table">
+      <table>
+        <caption><b>Unattended runs on two phones, 6 November 2026.</b> Commit 5480c43, laptop on mains power.</caption>
+        <thead><tr><th>Run</th><th>Length</th><th>Updates</th><th>Reconnects</th><th>Receipt to log, p95</th></tr></thead>
+        <tbody>
+          <tr><td>Static run</td><td>10 min</td><td>1,200</td><td>0</td><td>358 ms</td></tr>
+          <tr><td>Unattended run</td><td>10 min</td><td>1,200</td><td>0</td><td>415 ms</td></tr>
+          <tr><td>Continuous demo mode</td><td>30 min</td><td>3,610</td><td>0</td><td>369 ms</td></tr>
+          <tr><td>Restart cycles</td><td>5 × 1 min</td><td>5 × 120</td><td>0</td><td>312–349 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="next">Next steps</h2>
+    <ul>
+      <li>An instance head built on the learned embedding, to separate touching objects without splitting objects whose parts differ in colour.</li>
+      <li>Training data with more hand–object contact, so that an object held in the hand is segmented apart from the fingers.</li>
+      <li>A marked physical session on the phones, with positions measured against a printed target and changes performed and timed at the table.</li>
+    </ul>
+
+    <h2 id="references">References</h2>
+    <ol class="refs">
+      <li>L. Schmid, M. Abate, Y. Chang and L. Carlone. <a href="https://arxiv.org/abs/2402.13817"><i>Khronos: A unified approach for spatio-temporal metric-semantic SLAM in dynamic environments.</i></a> RSS, 2024.</li>
+      <li>N. Hughes, Y. Chang and L. Carlone. <a href="https://arxiv.org/abs/2201.13360"><i>Hydra: A real-time spatial perception system for 3D scene graph construction and optimization.</i></a> RSS, 2022.</li>
+      <li>Q. Gu et al. <a href="https://arxiv.org/abs/2309.16650"><i>ConceptGraphs: Open-vocabulary 3D scene graphs for perception and planning.</i></a> ICRA, 2024.</li>
+      <li>J. Wang et al. <a href="https://arxiv.org/abs/2406.06843"><i>HO-Cap: A capture system and dataset for 3D reconstruction and pose tracking of hand-object interaction.</i></a> 2024.</li>
+      <li>M. Suchi, T. Patten, D. Fischinger and M. Vincze. <i>EasyLabel: A semi-automatic pixel-wise object annotation tool for creating robotic RGB-D datasets.</i> ICRA, 2019. OCID data: <a href="https://doi.org/10.48436/pcbjd-4wa12">doi:10.48436/pcbjd-4wa12</a>.</li>
+      <li>M. Sandler, A. Howard, M. Zhu, A. Zhmoginov and L.-C. Chen. <a href="https://arxiv.org/abs/1801.04381"><i>MobileNetV2: Inverted residuals and linear bottlenecks.</i></a> CVPR, 2018.</li>
+      <li>T.-Y. Lin, P. Dollár, R. Girshick, K. He, B. Hariharan and S. Belongie. <a href="https://arxiv.org/abs/1612.03144"><i>Feature pyramid networks for object detection.</i></a> CVPR, 2017.</li>
+      <li>Y. Lu et al. <a href="https://arxiv.org/abs/2211.11679"><i>Mean shift mask transformer for unseen object instance segmentation.</i></a> 2022. Its tables report UOIS-Net-3D, UCN and MSMFormer on OCID.</li>
+      <li>B. De Brabandere, D. Neven and L. Van Gool. <a href="https://arxiv.org/abs/1708.02551"><i>Semantic instance segmentation with a discriminative loss function.</i></a> 2017.</li>
+      <li>Y. Xiang, C. Xie, A. Mousavian and D. Fox. <a href="https://arxiv.org/abs/2007.15157"><i>Learning RGB-D feature embeddings for unseen object instance segmentation.</i></a> CoRL, 2020.</li>
+    </ol>
+
+    <p class="article-note"><b>Methods and attribution.</b> The segmenter was trained with <code>tools/train_segmenter.py</code> in the Omni repository on a laptop CPU; validation rounds 6 to 8 are documented in the repository with their preregistrations. Figures 1 and 2 are computed from the raw Record3D packets and calibration of the recorded session of 23 October 2026: measured depth points placed by the phones' calibrated poses, and the masks Omni's live perception accepts. Figures 3, 6, 7, 9 and 10 show dataset frames, their published labels and model outputs on those frames, cropped. Figures 4, 5 and 8 are plotted with matplotlib directly from the training logs and result files; the script and data are kept with the article. Every script, data file and source is listed in <a href="./figure-source/README.txt">figure-source</a>. No image in this article was generated or altered by an AI model. Claude (Anthropic) helped write the figure scripts and draft the text; each number was checked against its source.</p>
+  </main>
+
+  <footer class="shell site-shell article-footer"><p>Jaundel Simon &middot; 2026</p><p><a href="/projects.html">All projects</a></p></footer>
+</body>
+</html>

@@ -4,7 +4,9 @@ Recorded phone session (Figures 1 and 2)
   phone_scene.py           Rebuilds one moment of runs/omni-demo-live (23 October 2026) in 3D: each phone's
                            LiDAR depth back-projected with its intrinsics, placed by its calibrated pose,
                            coloured from its own camera and cropped to the work area; rendered from a
-                           moving virtual camera. Writes media/scene/fused-orbit.webm and scene.json.
+                           moving virtual camera. Writes a 120-frame video and scene.json; the page
+                           shows those frames as media/scene/fused-orbit.webp (animated WebP),
+                           and the card thumbnail is a 360 px square crop of every second frame.
   phone_segmentation.py    Runs Omni's live single-camera perception (tools/phone_demo.py, detected) with
                            configs/tabletop-phone-learned.json on the same session and draws the accepted
                            masks. Figure 2 is frame 9 of "phone_segmentation.py 48 phone2 --all", 75.7 s
